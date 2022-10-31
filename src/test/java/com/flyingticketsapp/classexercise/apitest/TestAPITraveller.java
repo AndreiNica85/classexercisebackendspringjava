@@ -18,37 +18,35 @@ public class TestAPITraveller {
     public static void main(String[] args) {
         /* GET Traveller Test */
         RequestSpecification requestSpecification = given().spec(requestSpecificationBaseURI).when();
-
         ResponseSpecification responseSpecification = new ResponseSpecBuilder().expectStatusCode(200).expectContentType(ContentType.JSON).build();
         // get Traveller with id = 1;
         Response response = requestSpecification.when().get("/1").
                 then().spec(responseSpecification).extract().response();
         System.out.println(response.asString());
 
+
         /* DELETE Traveller Test */
         RequestSpecification requestSpecification1 = given().spec(requestSpecificationBaseURI);
-
+        // delete traveller ID = 1;
         ResponseSpecification responseSpecification1 = new ResponseSpecBuilder().expectStatusCode(200).build();
         Response response1 = requestSpecification1.when().delete("/1").
                 then().spec(responseSpecification1).extract().response();
         System.out.println(response1.asString());
 
+
         /* POST Traveller Test */
         RequestSpecification requestSpecification2 = given().spec(requestSpecificationBaseURI).body(
-                "{\n" +
-                "\"id\": 3,\n" +
-                "\"name\": \"Toyota\",\n" +
-                "\"type\": \"CHR\",\n" +
-                "\"repairsNumber\": 3,\n" +
-                "\"previousRepairDates\": [\n" +
-                "\"2022-10-29\"\n" +
-                "]\n" +
-                "},"
-              ).when();
+                """
+                        {
+                        "id": 3,
+                        "2022-10-29"
+                        ]
+                        },"""
+        ).when();
         ResponseSpecification responseSpecification2 = new ResponseSpecBuilder().expectStatusCode(200).build();
-        // get Traveller with id = 1;
-        Response response2 = requestSpecification2.when().post("http://localhost:8080/cars")
-                        .then().spec(responseSpecification2).extract().response();
+        // create traveller id = 3
+        Response response2 = requestSpecification2.when().post("http://localhost:8080/travellers")
+                .then().spec(responseSpecification2).extract().response();
         System.out.println(response2.asString());
     }
 }
