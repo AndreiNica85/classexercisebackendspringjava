@@ -48,4 +48,6 @@ public class BookSeatsTest {
         LocalDate currentDate = LocalDate.now();
         Assert.isTrue(flightDate.compareTo(currentDate) >= 0, "flightDate should not be in past date");
     }
+
+    ////////////////////////////////COMENT FOR ANDREI AND RODRIGO //////////////////////////////////
 }

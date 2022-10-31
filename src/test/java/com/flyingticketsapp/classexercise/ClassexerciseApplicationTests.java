@@ -9,6 +9,4 @@ import org.springframework.util.Assert;
 @SpringBootTest
 class ClassexerciseApplicationTests {
 
-
-
 }
