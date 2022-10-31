@@ -5,7 +5,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.util.Assert;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
 @SpringBootTest
