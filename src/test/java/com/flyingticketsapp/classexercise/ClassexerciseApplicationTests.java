@@ -16,6 +16,7 @@ class ClassexerciseApplicationTests {
 		Assert.isTrue(planeSits < maxNumberOfSits, "Maximum number of sits in a plane is 100" );
 	}
 
+	//this is a test comment
 
 
 }
