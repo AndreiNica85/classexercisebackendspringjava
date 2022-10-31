@@ -1,13 +1,12 @@
-package com.flyingticketsapp.classexercise;
+package com.flyingticketsapp.classexercise.unittest;
 
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.util.Assert;
 
 @SpringBootTest
-class ClassexerciseApplicationTests {
+class TestUnit {
 
     @ParameterizedTest()
     @ValueSource(ints = {98, 100,101,200})
