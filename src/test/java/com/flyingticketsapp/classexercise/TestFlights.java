@@ -19,12 +19,5 @@ public class TestFlights {
         Assert.isTrue(maxLugagge <= 10, "Testing lugagge");
     }
 
-    @Test
-    @ParameterizedTest()
-    public void dateGreaterEqualsThanToday(){
-        LocalDate today = LocalDate.now();
-        //Assert()
-    }
-
 
 }
