@@ -7,12 +7,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.util.Assert;
 
 @SpringBootTest
-class ClasseerciseApplicationTests {
-
-	@Test
-	void contextLoads() {
-
-	}
+class ClassexerciseApplicationTests {
 
 	@ParameterizedTest()
 	@ValueSource(ints = {98, 100,101,200})
@@ -20,5 +15,7 @@ class ClasseerciseApplicationTests {
 		int maxNumberOfSits = 100;  // Maximum sits per plane is 100;
 		Assert.isTrue(planeSits < maxNumberOfSits, "Maximum number of sits in a plane is 100" );
 	}
+
+
 
 }
