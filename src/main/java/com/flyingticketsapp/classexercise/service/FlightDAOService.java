@@ -10,6 +10,9 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 @Component
 @Primary
@@ -45,8 +48,22 @@ public class FlightDAOService {
         Flight flight6 = new Flight(++flightsCount,"Barcelona","Birmingham",null, LocalDate.of(2022,11,7), LocalTime.of(2,20),plane6,120.0);
         Flight flight7 = new Flight(++flightsCount,"Seville","Bucharest",null, LocalDate.of(2022,11,5), LocalTime.of(3,50),plane7,450.0);
         Flight flight8 = new Flight(++flightsCount,"Bucharest","Seville",null, LocalDate.now(), LocalTime.of(3,50),plane8,350.0);
-
+        flights = List.of(flight1,flight2,flight3,flight4,flight5,flight6,flight7,flight8);
     }
 
-    
+    public Set<String> queryFlightsByOrigin(String origin){     // List of flights that show only 1 destination for both round or one way trip
+        Predicate<String> predicate = s -> s.equals(origin);
+        return flights.stream().map(Flight::getDestination).filter(predicate).collect(Collectors.toSet());
+    }
+
+    public List<Flight> queryFlightsByOriginRoundTrip(String origin, String destination, boolean roundTrip){     // If traveller chooses round trip
+        Predicate<Flight> predicate;
+        if(roundTrip){
+            predicate = flight -> flight.getOrigin().equals(origin) && flight.getDestination().equals(destination) && flight.getScales() != null;
+        }else{
+            predicate = flight -> flight.getOrigin().equals(origin) && flight.getDestination().equals(destination) && flight.getScales() == null;
+        }
+        return flights.stream().filter(predicate).collect(Collectors.toList());
+    }
+
 }
