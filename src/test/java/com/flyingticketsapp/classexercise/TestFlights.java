@@ -9,6 +9,7 @@ import org.springframework.test.context.event.annotation.BeforeTestMethod;
 import org.springframework.util.Assert;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 
 @SpringBootTest
 public class TestFlights {
