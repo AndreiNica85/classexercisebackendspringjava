@@ -3,6 +3,7 @@ package com.flyingticketsapp.classexercise.service;
 import com.flyingticketsapp.classexercise.model.Flight;
 import com.flyingticketsapp.classexercise.model.Plane;
 import com.flyingticketsapp.classexercise.model.Traveller;
+import com.flyingticketsapp.classexercise.repository.FlightJPARepository;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Component;
 
@@ -14,13 +15,12 @@ import java.util.Set;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
-@Component
-@Primary
+
 public class FlightDAOService {
 
-    private static List<Flight> flights = new ArrayList<>();
-    private static List<String> sevilleToBucharestScalesList = new ArrayList<>();
-    private static List<String> bucharestToSevilleScalesList = new ArrayList<>();
+    private static List<Flight> flights;
+    private static List<String> sevilleToBucharestScalesList;
+    private static List<String> bucharestToSevilleScalesList;
 
     private static int flightsCount = 0;
     private static int planesCount = 0;
@@ -47,8 +47,9 @@ public class FlightDAOService {
         Flight flight5 = new Flight(++flightsCount,"Paris","Seville",null, LocalDate.of(2022,11,6), LocalTime.of(2,44),plane5,250.0);
         Flight flight6 = new Flight(++flightsCount,"Barcelona","Birmingham",null, LocalDate.of(2022,11,7), LocalTime.of(2,20),plane6,120.0);
         Flight flight7 = new Flight(++flightsCount,"Seville","Bucharest",null, LocalDate.of(2022,11,5), LocalTime.of(3,50),plane7,450.0);
-        Flight flight8 = new Flight(++flightsCount,"Bucharest","Seville",null, LocalDate.now(), LocalTime.of(3,50),plane8,350.0);
+        Flight flight8 = new Flight(++flightsCount,"Bucharest","Seville",null, LocalDate.of(2022,11,1), LocalTime.of(3,50),plane8,350.0);
         flights = List.of(flight1,flight2,flight3,flight4,flight5,flight6,flight7,flight8);
+
     }
 
     public Set<String> queryFlightsByOrigin(String origin){     // List of flights that show only 1 destination for both round or one way trip
@@ -56,14 +57,20 @@ public class FlightDAOService {
         return flights.stream().map(Flight::getDestination).filter(predicate).collect(Collectors.toSet());
     }
 
-    public List<Flight> queryFlightsByOriginRoundTrip(String origin, String destination, boolean roundTrip){     // If traveller chooses round trip
-        Predicate<Flight> predicate;
+    public List<Flight> queryFlightsByOriginRoundTrip(String origin, String destination, boolean roundTrip, LocalDate chosenDate){     // If traveller chooses round trip
+        Predicate<Flight> filterByDestinationAndScales;
         if(roundTrip){
-            predicate = flight -> flight.getOrigin().equals(origin) && flight.getDestination().equals(destination) && flight.getScales() != null;
+            filterByDestinationAndScales = flight -> flight.getOrigin().equals(origin) && flight.getDestination().equals(destination) && flight.getScales() != null;
         }else{
-            predicate = flight -> flight.getOrigin().equals(origin) && flight.getDestination().equals(destination) && flight.getScales() == null;
+            filterByDestinationAndScales = flight -> flight.getOrigin().equals(origin) && flight.getDestination().equals(destination) && flight.getScales() == null;
         }
-        return flights.stream().filter(predicate).collect(Collectors.toList());
+        List<Flight> allFlightsWithChosenDestination = flights.stream().filter(filterByDestinationAndScales).toList();
+        LocalDate less3Days = chosenDate.minusDays(4);
+        LocalDate more3Days = chosenDate.plusDays(4);
+        Predicate<Flight> filterBy3DaysMoreLess = flight -> flight.getDepartureDate().isAfter(less3Days) && flight.getDepartureDate().isBefore(more3Days) && flight.getDepartureDate().isAfter(LocalDate.now());
+        return allFlightsWithChosenDestination.stream().filter(filterBy3DaysMoreLess).toList();
     }
+
+  
 
 }
