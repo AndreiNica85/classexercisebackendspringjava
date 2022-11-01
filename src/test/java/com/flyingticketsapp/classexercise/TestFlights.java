@@ -1,4 +1,4 @@
-package com.flyingticketsapp.classexercise.unittest;
+package com.flyingticketsapp.classexercise;
 
 import org.assertj.core.util.Lists;
 import org.junit.jupiter.api.Test;
@@ -9,10 +9,15 @@ import org.springframework.test.context.event.annotation.BeforeTestMethod;
 import org.springframework.util.Assert;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 
-public class BookSeatsTest {
+@SpringBootTest
+public class TestFlights {
+
+    @ParameterizedTest
+    @ValueSource(doubles = {10.5, 9, 0, 1, 11})
+    public void lugaggeLessThanTen(double maxLugagge){
+        Assert.isTrue(maxLugagge <= 10, "Testing lugagge");
+    }
 
 
 }

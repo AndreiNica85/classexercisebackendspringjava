@@ -1,4 +1,4 @@
-package com.flyingticketsapp.classexercise.apitest;
+package com.flyingticketsapp.classexercise;
 
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.builder.ResponseSpecBuilder;
