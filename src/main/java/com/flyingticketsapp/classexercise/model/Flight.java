@@ -25,6 +25,8 @@ public class Flight {
     private LocalDate departureDate;
     private LocalTime departureTime;
     private String airline;
+    private boolean isRoundTrip;
+    private double price;
 
     @OneToOne
     @JsonIgnore

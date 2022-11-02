@@ -24,6 +24,7 @@ public class FlightResources {
         return flightService.getFlightById(id);
     }
 
+    //You must present a list of origins
     @GetMapping("/flights/cities/from/{origin}")
     public List<Flight> getFlightsByOrigin(@PathVariable String origin) {
         return flightService.getFlightsByOrigin(origin);
@@ -33,7 +34,7 @@ public class FlightResources {
     public List<Flight> getFlightsByDestination(@PathVariable String destination) {
         return flightService.getFlightsByDestination(destination);
     }
-
+    //API must be queried to obtain the possible destinations
     @GetMapping("/flights/cities/{origin}/{destination}")
     public List<Flight> getFlightsByConnection(@PathVariable String origin, @PathVariable String destination) {
         return flightService.getFlightsByOriginAndDestination(origin, destination);
