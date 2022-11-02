@@ -3,6 +3,7 @@ package com.flyingticketsapp.classexercise.service;
 import com.flyingticketsapp.classexercise.model.Flight;
 import com.flyingticketsapp.classexercise.model.Plane;
 import com.flyingticketsapp.classexercise.model.Traveller;
+import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -12,7 +13,7 @@ import java.util.Set;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
-
+@Component
 public class FlightService {
 
     private static List<Flight> flights;

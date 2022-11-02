@@ -48,4 +48,14 @@ public class Plane {
     public void setSits(List<Traveller> sits) {
         this.sits = sits;
     }
+
+    @Override
+    public String toString() {
+        return "Plane{" +
+                "id=" + id +
+                ", airline='" + airline + '\'' +
+                ", luggage=" + luggage +
+                ", sits=" + sits +
+                '}';
+    }
 }

@@ -75,4 +75,17 @@ public class Traveller {
     public void setBag(boolean bag) {
         this.bag = bag;
     }
+
+    @Override
+    public String toString() {
+        return "Traveller{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", surname='" + surname + '\'' +
+                ", nationality='" + nationality + '\'' +
+                ", NIEorPassPort='" + NIEorPassPort + '\'' +
+                ", age=" + age +
+                ", bag=" + bag +
+                '}';
+    }
 }

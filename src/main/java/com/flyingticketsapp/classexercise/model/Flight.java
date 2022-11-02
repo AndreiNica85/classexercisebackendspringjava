@@ -1,8 +1,11 @@
 package com.flyingticketsapp.classexercise.model;
 
+import jakarta.persistence.Entity;
+
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
+
 
 public class Flight {
     private int id;
@@ -88,5 +91,19 @@ public class Flight {
 
     public void setPrice(double price) {
         this.price = price;
+    }
+
+    @Override
+    public String toString() {
+        return "Flight{" +
+                "id=" + id +
+                ", origin='" + origin + '\'' +
+                ", destination='" + destination + '\'' +
+                ", scales=" + scales +
+                ", departureDate=" + departureDate +
+                ", transitTime=" + transitTime +
+                ", plane=" + plane +
+                ", price=" + price +
+                '}';
     }
 }
