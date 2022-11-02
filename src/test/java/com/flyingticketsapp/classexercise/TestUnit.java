@@ -1,23 +1,32 @@
 package com.flyingticketsapp.classexercise;
 
-import org.assertj.core.util.Lists;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.event.annotation.BeforeTestMethod;
 import org.springframework.util.Assert;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BookSeatsTest {
+public class TestUnit {
+
+    @ParameterizedTest()
+    @ValueSource(ints = {98, 100,101,200})
+    void maxNumberSits(int planeSits) {
+        int maxNumberOfSits = 100;  // Maximum sits per plane is 100;
+        Assert.isTrue(planeSits < maxNumberOfSits, "Maximum number of sits in a plane is 100" );
+    }
+
+    @ParameterizedTest
+    @ValueSource(doubles = {10.5, 9, 0, 1, 11})
+    public void lugaggeLessThanTen(double maxLugagge){
+        Assert.isTrue(maxLugagge <= 10, "Testing lugagge");
+    }
 
     public boolean bookASeat(String seat, List<String> seats) {
         return seats.remove(seat);
     }
-
     @ParameterizedTest
     @ValueSource(strings = {"15B","16B","17B","18B"})
     public void testIfSeatIsAvailableForBooking(String seatAvailable) {
