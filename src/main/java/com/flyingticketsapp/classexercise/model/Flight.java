@@ -8,7 +8,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 @NoArgsConstructor
@@ -28,6 +27,7 @@ public class Flight {
     private String airline;
 
     @OneToOne
+    @JsonIgnore
     private Plane plane;
 
     @ManyToOne
