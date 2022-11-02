@@ -35,8 +35,8 @@ public class FlightService {
     }
 
 
-    public Set<String> getUniqueFlightsByOrigin(String origin) {                 // Get a collection of unique origins for the flights
-        List<Flight> flightsBYOriginList = flightRepository.findByOrigin(origin);
+    public Set<String> getUniqueFlightOrigins() {                 // Get a collection of unique origins for the flights
+        List<Flight> flightsBYOriginList = flightRepository.findAll();
         return flightsBYOriginList.stream().map(Flight::getOrigin).collect(Collectors.toSet());
     }
 

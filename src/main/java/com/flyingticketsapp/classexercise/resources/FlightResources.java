@@ -31,12 +31,12 @@ public class FlightResources {
         return flightService.getFlightsByOrigin(origin);
     }
 
-    @GetMapping("/flights/cities/{origin}")
-    public Set<String> getUniqueFlightsByOrigin(@PathVariable String origin) {
-        return flightService.getUniqueFlightsByOrigin(origin);
+    @GetMapping("/flights/departures")               // Get a collection of Unique origins  - departure place
+    public Set<String> getUniqueFlightsByOrigin() {
+        return flightService.getUniqueFlightOrigins();
     }
 
-    @GetMapping("/flights/cities/destinationsFrom{origin}")
+    @GetMapping("/flights/{origin}/destinations")             // Get a collection of Unique destinations  - Where do you want to go
     public Set<String> getDestinationStringsByUniqueOrigin(@PathVariable String origin) {
         return flightService.getDestinationStringsByUniqueOrigin(origin);
     }
