@@ -45,8 +45,6 @@ public class FlightService {
         return flightsBYOriginList.stream().map(Flight::getDestination).collect(Collectors.toSet());
     }
 
-
-
     public List<Flight> getFlightsByDestination(String destination) {
         return flightRepository.findByDestination(destination);
     }
