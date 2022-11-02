@@ -8,9 +8,11 @@ import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Set;
 
 @Repository
 public interface FlightRepository extends JpaRepository<Flight, Integer> {
+
     List<Flight> findByOrigin( String origin);
 
     List<Flight> findByDestination(String destination);

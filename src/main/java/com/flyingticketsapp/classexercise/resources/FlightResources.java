@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Set;
 
 @RestController
 public class FlightResources {
@@ -28,6 +29,11 @@ public class FlightResources {
     @GetMapping("/flights/cities/from/{origin}")
     public List<Flight> getFlightsByOrigin(@PathVariable String origin) {
         return flightService.getFlightsByOrigin(origin);
+    }
+
+    @GetMapping("/flights/cities/{origin}")
+    public Set<Flight> getUniqueFlightsByOrigin(@PathVariable String origin) {
+        return flightService.getUniqueFlightsByOrigin(origin);
     }
 
     @GetMapping("/flights/cities/to/{destination}")

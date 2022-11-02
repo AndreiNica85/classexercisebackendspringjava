@@ -9,6 +9,7 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 public class FlightService {
@@ -34,6 +35,8 @@ public class FlightService {
         System.out.println("Triggered and origin:" + origin + "passed.");
         return flightRepository.findByOrigin(origin);
     }
+
+    
 
     public List<Flight> getFlightsByDestination(String destination) {
         return flightRepository.findByDestination(destination);
