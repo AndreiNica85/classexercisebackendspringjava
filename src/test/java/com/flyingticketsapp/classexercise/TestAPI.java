@@ -39,9 +39,14 @@ public class TestAPI {
                 """
                         {
                         "id": 3,
-                        "2022-10-29"
-                        ]
-                        },"""
+                        "origin": "Seville",
+                        "destination": "Madrid",
+                        "departureDate": "2022-11-07",
+                        "departureTime": "23:10:00",
+                        "airline": "Fe22",
+                        "price": 0.0,
+                        "roundTrip": false
+                        }"""
         ).when();
         ResponseSpecification responseSpecification2 = new ResponseSpecBuilder().expectStatusCode(200).build();
         // create traveller id = 3

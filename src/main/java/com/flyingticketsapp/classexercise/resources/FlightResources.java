@@ -31,7 +31,7 @@ public class FlightResources {
         return flightService.getFlightsByOrigin(origin);
     }
 
-    @GetMapping("/flights/departures")               // Get a collection of Unique origins  - departure place
+    @GetMapping("/flights/departureOrigins")               // Get a collection of Unique origins  - departure place
     public Set<String> getUniqueFlightsByOrigin() {
         return flightService.getUniqueFlightOrigins();
     }
@@ -57,20 +57,22 @@ public class FlightResources {
     //date is less than the current day, you must add a day to the following days.
     @GetMapping("/flights/dates/{departureDate}")
     public List<Flight> getFlightByDates(@PathVariable("departureDate") String departureDate) {
-
         LocalDate from = LocalDate.parse(departureDate).minusDays(3);
         LocalDate to = LocalDate.parse(departureDate).plusDays(3);
-
         return flightService.getFlightsByDates(from, to);
     }
 
     @GetMapping("/flights/dates/{dateFrom}/{dateTo}")
     public List<Flight> getFlightByDates(@PathVariable("dateFrom") String dateFrom, @PathVariable("dateTo") String dateTo) {
-
         LocalDate from = LocalDate.parse(dateFrom);
         LocalDate to = LocalDate.parse(dateTo);
-
         return flightService.getFlightsByDates(from, to);
+    }
+
+    @GetMapping("/flights/{origin}/{destination}/dates/{chosenDate}")
+    public List<Flight> getFlightByDates3DaysAfterAndBefore(@PathVariable("chosenDate") String date, String origin, String destination) {
+        LocalDate chosen = LocalDate.parse(date);
+        return flightService.getFlightByDates3DaysAfterAndBefore(chosen,origin,destination);
     }
 
     @PostMapping("/flights")
