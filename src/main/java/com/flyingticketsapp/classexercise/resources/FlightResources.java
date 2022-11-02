@@ -34,12 +34,16 @@ public class FlightResources {
     public List<Flight> getFlightsByDestination(@PathVariable String destination) {
         return flightService.getFlightsByDestination(destination);
     }
+
     //API must be queried to obtain the possible destinations
     @GetMapping("/flights/cities/{origin}/{destination}")
     public List<Flight> getFlightsByConnection(@PathVariable String origin, @PathVariable String destination) {
         return flightService.getFlightsByOriginAndDestination(origin, destination);
     }
 
+    //The search must return different possibilities throughout the same day for the selected date, the
+    //3 days before and the 3 days after the selected date. If any of the days prior to the searched
+    //date is less than the current day, you must add a day to the following days.
     @GetMapping("/flights/dates/{departureDate}")
     public List<Flight> getFlightByDates(@PathVariable("departureDate") String departureDate) {
 
