@@ -6,10 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class FlightService {
@@ -36,7 +34,18 @@ public class FlightService {
         return flightRepository.findByOrigin(origin);
     }
 
-    
+
+    public Set<String> getUniqueFlightsByOrigin(String origin) {                 // Get a collection of unique origins for the flights
+        List<Flight> flightsBYOriginList = flightRepository.findByOrigin(origin);
+        return flightsBYOriginList.stream().map(Flight::getOrigin).collect(Collectors.toSet());
+    }
+
+    public Set<String> getDestinationStringsByUniqueOrigin(String origin) {      // Get a collection of unique destinations for the origin
+        List<Flight> flightsBYOriginList = flightRepository.findByOrigin(origin);
+        return flightsBYOriginList.stream().map(Flight::getDestination).collect(Collectors.toSet());
+    }
+
+
 
     public List<Flight> getFlightsByDestination(String destination) {
         return flightRepository.findByDestination(destination);

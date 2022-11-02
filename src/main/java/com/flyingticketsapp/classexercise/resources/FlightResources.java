@@ -32,8 +32,13 @@ public class FlightResources {
     }
 
     @GetMapping("/flights/cities/{origin}")
-    public Set<Flight> getUniqueFlightsByOrigin(@PathVariable String origin) {
+    public Set<String> getUniqueFlightsByOrigin(@PathVariable String origin) {
         return flightService.getUniqueFlightsByOrigin(origin);
+    }
+
+    @GetMapping("/flights/cities/destinationsFrom{origin}")
+    public Set<String> getDestinationStringsByUniqueOrigin(@PathVariable String origin) {
+        return flightService.getDestinationStringsByUniqueOrigin(origin);
     }
 
     @GetMapping("/flights/cities/to/{destination}")
