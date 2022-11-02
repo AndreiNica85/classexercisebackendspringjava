@@ -2,6 +2,7 @@ package com.flyingticketsapp.classexercise.service;
 
 import com.flyingticketsapp.classexercise.model.Flight;
 import com.flyingticketsapp.classexercise.repository.FlightRepository;
+import com.flyingticketsapp.classexercise.resources.DateNotAvailableException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -58,7 +59,11 @@ public class FlightService {
         return flightRepository.findByDepartureDate(departureDate);
     }
 
-    public List<Flight> getFlightsByDates(LocalDate dateFrom, LocalDate dateTo) {
+    public List<Flight> getFlightsByDates(LocalDate dateFrom, LocalDate dateTo)  {
+        if(dateFrom.isBefore(LocalDate.now())){
+            dateFrom = LocalDate.now();
+            dateTo = dateTo.plusDays(6);
+        }
         return flightRepository.getFlightsByDates(dateFrom, dateTo);
     }
 

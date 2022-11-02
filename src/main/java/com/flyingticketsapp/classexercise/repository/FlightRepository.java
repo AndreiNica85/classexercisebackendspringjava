@@ -1,9 +1,11 @@
 package com.flyingticketsapp.classexercise.repository;
 
 import com.flyingticketsapp.classexercise.model.Flight;
+import com.flyingticketsapp.classexercise.resources.DateNotAvailableException;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;

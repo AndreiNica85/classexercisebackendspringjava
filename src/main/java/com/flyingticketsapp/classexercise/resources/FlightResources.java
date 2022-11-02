@@ -69,7 +69,7 @@ public class FlightResources {
         return flightService.getFlightsByDates(from, to);
     }
 
-    @GetMapping("/flights/{origin}/{destination}/dates/{chosenDate}")
+    @GetMapping("/flights/dates/{chosenDate}")
     public List<Flight> getFlightByDates3DaysAfterAndBefore(@PathVariable("chosenDate") String date, String origin, String destination) {
         LocalDate chosen = LocalDate.parse(date);
         return flightService.getFlightByDates3DaysAfterAndBefore(chosen,origin,destination);
