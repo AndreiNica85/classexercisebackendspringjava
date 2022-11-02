@@ -3,11 +3,7 @@ package com.flyingticketsapp.classexercise.service;
 import com.flyingticketsapp.classexercise.model.Flight;
 import com.flyingticketsapp.classexercise.model.Plane;
 import com.flyingticketsapp.classexercise.model.Traveller;
-import com.flyingticketsapp.classexercise.repository.FlightJPARepository;
-import org.springframework.context.annotation.Primary;
-import org.springframework.stereotype.Component;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -17,7 +13,7 @@ import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 
-public class FlightDAOService {
+public class FlightService {
 
     private static List<Flight> flights;
     private static List<String> sevilleToBucharestScalesList;
@@ -31,14 +27,14 @@ public class FlightDAOService {
         Traveller traveller1 = new Traveller(++travellerCount,"Fernando","Andrei","Spain","N9423531K",32,true);
         Traveller traveller2 = new Traveller(++travellerCount,"Armand","Ioan","Italy","N9123531K",1,false);
         Traveller traveller3 = new Traveller(++travellerCount,"Ioana","Adriana","Russia","N9123531K",6,true);
-        Plane plane1 = new Plane(++planesCount,"British Airlines",false,new ArrayList<>(List.of(traveller1)),120);
-        Plane plane2 = new Plane(++planesCount,"Turkish Airlines",true,new ArrayList<>(List.of(traveller2,traveller3)),100);
-        Plane plane3 = new Plane(++planesCount,"BlueAir",true,new ArrayList<>(),100);
-        Plane plane4 = new Plane(++planesCount,"British Airlines",true,new ArrayList<>(),120);
-        Plane plane5 = new Plane(++planesCount,"British Airlines",true,new ArrayList<>(),120);
-        Plane plane6 = new Plane(++planesCount,"WizzAir",true,new ArrayList<>(),100);
-        Plane plane7 = new Plane(++planesCount,"BlueAir",false,new ArrayList<>(),100);
-        Plane plane8 = new Plane(++planesCount,"WizzAir",true,new ArrayList<>(),100);
+        Plane plane1 = new Plane(++planesCount,"British Airlines",false,new ArrayList<>(List.of(traveller1)));
+        Plane plane2 = new Plane(++planesCount,"Turkish Airlines",true,new ArrayList<>(List.of(traveller2,traveller3)));
+        Plane plane3 = new Plane(++planesCount,"BlueAir",true,new ArrayList<>());
+        Plane plane4 = new Plane(++planesCount,"British Airlines",true,new ArrayList<>());
+        Plane plane5 = new Plane(++planesCount,"British Airlines",true,new ArrayList<>());
+        Plane plane6 = new Plane(++planesCount,"WizzAir",true,new ArrayList<>());
+        Plane plane7 = new Plane(++planesCount,"BlueAir",false,new ArrayList<>());
+        Plane plane8 = new Plane(++planesCount,"WizzAir",true,new ArrayList<>());
         sevilleToBucharestScalesList = List.of("London","Madrid","Paris");
         bucharestToSevilleScalesList = List.of("London","Madrid","Paris");
         Flight flight1 = new Flight(++flightsCount,"Seville","Bucharest",sevilleToBucharestScalesList, LocalDateTime.of(2022,11,5,12,30), LocalTime.of(3,50),plane1,450.0);
