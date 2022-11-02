@@ -9,7 +9,7 @@ import io.restassured.specification.ResponseSpecification;
 
 import static io.restassured.RestAssured.given;
 
-public class TestAPITraveller {
+public class TestAPI {
 
     private static final RequestSpecification requestSpecificationBaseURI = new RequestSpecBuilder().setContentType(ContentType.JSON)
             .setBaseUri("http://localhost:8080/travellers")
