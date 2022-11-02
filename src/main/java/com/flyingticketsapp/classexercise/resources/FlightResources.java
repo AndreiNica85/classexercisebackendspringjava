@@ -47,8 +47,10 @@ public class FlightResources {
     @GetMapping("/flights/dates/{departureDate}")
     public List<Flight> getFlightByDates(@PathVariable("departureDate") String departureDate) {
 
-        LocalDate from = LocalDate.parse(departureDate);
-        return flightService.getFlightsByDepartureDate(from);
+        LocalDate from = LocalDate.parse(departureDate).minusDays(3);
+        LocalDate to = LocalDate.parse(departureDate).plusDays(3);
+
+        return flightService.getFlightsByDates(from, to);
     }
 
     @GetMapping("/flights/dates/{dateFrom}/{dateTo}")
