@@ -3,7 +3,10 @@ package com.flyingticketsapp.classexercise.resources;
 import com.flyingticketsapp.classexercise.model.Flight;
 import com.flyingticketsapp.classexercise.model.Traveller;
 import com.flyingticketsapp.classexercise.service.FlightService;
+import org.hibernate.service.spi.InjectService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Bean;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
@@ -13,8 +16,14 @@ import java.util.stream.Collectors;
 
 @RestController
 public class FlightResources {
+
     @Autowired
+    @Qualifier("flightService")
     FlightService flightService;
+
+    public FlightResources (FlightService flightService){
+        this.flightService = flightService;
+    }
 
     @GetMapping("/flights")
     public List<Flight> getFlights() {

@@ -1,23 +1,21 @@
 package com.flyingticketsapp.classexercise.service;
 
-import com.flyingticketsapp.classexercise.model.Flight;
 import com.flyingticketsapp.classexercise.model.Traveller;
 import com.flyingticketsapp.classexercise.repository.TravellerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
-import java.util.function.Predicate;
 
 @Service
-public class TravellerService {
+public class BookService {
 
     @Autowired
     TravellerRepository travellerRepository;
+
+    protected static int countPaidFlights = 0;
 
     public List<Traveller> getAllTravellers(){
         return travellerRepository.findAll();
@@ -29,6 +27,7 @@ public class TravellerService {
     }
 
     public Traveller addTraveller(Traveller traveller){
+        countPaidFlights++;
         return travellerRepository.save(traveller);
     }
 
