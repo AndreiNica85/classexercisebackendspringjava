@@ -33,6 +33,10 @@ public class Traveller {
     @NotNull
     private Integer age;
 
+    private String userNameAdministrationPage;
+
+    private String passwordAdministrationPage;
+
     @NotBlank
     private String nationality;
 
