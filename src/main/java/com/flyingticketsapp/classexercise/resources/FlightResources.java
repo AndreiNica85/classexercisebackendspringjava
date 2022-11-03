@@ -60,6 +60,19 @@ public class FlightResources {
         return flights.stream().filter(flight -> flight.getOrigin().equals(origin) && flight.getDestination().equals(destination)).collect(Collectors.toList());
     }
 
+    @GetMapping("/flights/cities/{origin}/{destination}/{date}/{roundTrip}")
+    public List<Flight> getFlightsByConnectionAndDateAndRoundTrip(@PathVariable String origin, @PathVariable String destination, @PathVariable String date, @PathVariable boolean roundTrip) {
+        LocalDate dateDeparture = LocalDate.parse(date);
+        List<Flight> flights = flightService.getFlightsByDepartureDate(dateDeparture);
+        List<Flight> resultList;
+        if(roundTrip){
+            resultList = flights.stream().filter(flight -> flight.isRoundTrip() && flight.getOrigin().equals(origin) && flight.getDestination().equals(destination)).collect(Collectors.toList());
+        }else{
+            resultList = flights.stream().filter(flight -> !flight.isRoundTrip() && flight.getOrigin().equals(origin) && flight.getDestination().equals(destination)).collect(Collectors.toList());
+        }
+        return resultList;
+    }
+
     //The search must return different possibilities throughout the same day for the selected date, the
     //3 days before and the 3 days after the selected date. If any of the days prior to the searched
     //date is less than the current day, you must add a day to the following days.

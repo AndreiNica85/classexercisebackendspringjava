@@ -72,8 +72,6 @@ public class FlightService {
         flightRepository.save(flight);
     }
 
-    
-
     public Flight deleteFlightById(Integer id) {
         return getFlightById(id);
     }

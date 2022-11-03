@@ -2,6 +2,8 @@ package com.flyingticketsapp.classexercise.model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -19,11 +21,25 @@ public class Traveller {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @JoinColumn
     private Integer id;
+
+    @NotNull
+    @NotBlank
     private String forename;
+
+    @NotNull
+    @NotBlank
     private String surname;
-    private int age;
+
+    @NotNull
+    private Integer age;
+
+    @NotBlank
     private String nationality;
+
+    @NotBlank
     private String email;
+
+    @Size(min = 9,max = 9, message = "NIE has to be 9 characters long")
     private String NIE;
     @OneToMany
     private List<Flight> bookedFlights;
