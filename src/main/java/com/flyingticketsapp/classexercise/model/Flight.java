@@ -29,6 +29,6 @@ public class Flight {
     private boolean isRoundTrip;
     private double price;
     @OneToMany
-    private List<Traveller> traveller;
+    private List<Traveller> travellers;
 
 }

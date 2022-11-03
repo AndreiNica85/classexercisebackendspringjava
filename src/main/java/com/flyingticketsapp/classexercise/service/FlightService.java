@@ -20,9 +20,7 @@ public class FlightService {
     }
 
     public Flight getFlightById(Integer id) {
-
         Optional<Flight> searchedFlight = flightRepository.findById(id);
-
         if (searchedFlight.isPresent()) {
             return searchedFlight.get();
         } else {
@@ -34,7 +32,6 @@ public class FlightService {
         System.out.println("Triggered and origin:" + origin + "passed.");
         return flightRepository.findByOrigin(origin);
     }
-
 
     public Set<String> getUniqueFlightOrigins() {                 // Get a collection of unique origins for the flights
         List<Flight> flightsBYOriginList = flightRepository.findAll();
@@ -67,14 +64,15 @@ public class FlightService {
     }
 
     public void setTravellerForFlight(int flightId, Traveller traveller){
-        flightRepository.getReferenceById(flightId).setTraveller(traveller);
+        List<Traveller> listTravellers = flightRepository.getReferenceById(flightId).getTravellers();
+        listTravellers.add(traveller);
     }
 
     public void addFlight(Flight flight) {
         flightRepository.save(flight);
     }
 
-
+    
 
     public Flight deleteFlightById(Integer id) {
         return getFlightById(id);

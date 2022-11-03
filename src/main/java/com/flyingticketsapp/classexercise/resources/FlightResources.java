@@ -1,6 +1,7 @@
 package com.flyingticketsapp.classexercise.resources;
 
 import com.flyingticketsapp.classexercise.model.Flight;
+import com.flyingticketsapp.classexercise.model.Traveller;
 import com.flyingticketsapp.classexercise.service.FlightService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -86,8 +87,8 @@ public class FlightResources {
         flightService.deleteFlightById(id);
     }
 
-    @PutMapping
-    public void setTravellerForFlight(){
-       
+    @PutMapping("/flights/setTraveller")
+    public void setTravellerForFlight(int flightId, Traveller traveller){
+        flightService.setTravellerForFlight(flightId,traveller);
     }
 }
