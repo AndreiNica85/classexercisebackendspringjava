@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @RestController
 public class FlightResources {
@@ -50,6 +51,13 @@ public class FlightResources {
     @GetMapping("/flights/cities/{origin}/{destination}")
     public List<Flight> getFlightsByConnection(@PathVariable String origin, @PathVariable String destination) {
         return flightService.getFlightsByOriginAndDestination(origin, destination);
+    }
+
+    @GetMapping("/flights/cities/{origin}/{destination}/{date}")
+    public List<Flight> getFlightsByConnectionAndDate(@PathVariable String origin, @PathVariable String destination, @PathVariable String date) {
+        LocalDate dateDeparture = LocalDate.parse(date);
+        List<Flight> flights = flightService.getFlightsByDepartureDate(dateDeparture);
+        return flights.stream().filter(flight -> flight.getOrigin().equals(origin) && flight.getDestination().equals(destination)).collect(Collectors.toList());
     }
 
     //The search must return different possibilities throughout the same day for the selected date, the

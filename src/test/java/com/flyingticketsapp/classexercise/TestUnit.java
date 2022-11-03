@@ -46,18 +46,6 @@ public class TestUnit {
 
 
 
-//    @Test  /* Pass */
-//    public void tes1tIfAnyFlightsQueriedBeforeChosenDate() {
-//        Response response = RestAssured.given().contentType(ContentType.JSON)
-//                .when().get("http://localhost:8080/flights/dates/2022-11-24")
-//
-//
-//        System.out.println(response.asString());
-//
-//        RequestSpecification
-//    }
-
-
 //    @Test  /*  */
 //    public void testIfAnyFlightsQueriedBeforeChosenTime() {
 //        Response response = RestAssured.given().contentType(ContentType.JSON)
