@@ -1,5 +1,8 @@
 package com.flyingticketsapp.classexercise;
 
+import io.restassured.RestAssured;
+import io.restassured.http.ContentType;
+import io.restassured.response.Response;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -7,24 +10,25 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.util.Assert;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+
+
+import static org.hamcrest.Matchers.*;
 
 @SpringBootTest
 public class TestUnit {
 
-    @ParameterizedTest()
-    @ValueSource(ints = {98, 100,101,200})
-    void maxNumberSits(int planeSits) {
-        int maxNumberOfSits = 100;  // Maximum sits per plane is 100;
-        Assert.isTrue(planeSits < maxNumberOfSits, "Maximum number of sits in a plane is 100" );
+    @Test  /* Pass */
+    public void testIfAnyFlightsQueriedBeforeChosenDate() {
+        Response response = RestAssured.given().contentType(ContentType.JSON)
+                .when().get("http://localhost:8080/flights/dates/2022-11-24")
+                .then().assertThat().body("departureDate", everyItem(not(lessThan(((LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")))))))).extract().response();
+        System.out.println(response.asString());
     }
 
-    @ParameterizedTest
-    @ValueSource(doubles = {10.5, 9, 0, 1, 11})
-    public void lugaggeLessThanTen(double maxLugagge){
-        Assert.isTrue(maxLugagge <= 10, "Testing lugagge");
-    }
+    
 
     public boolean bookASeat(String seat, List<String> seats) {
         return seats.remove(seat);

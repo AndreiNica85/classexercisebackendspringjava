@@ -6,24 +6,27 @@ import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 import io.restassured.specification.ResponseSpecification;
+import org.springframework.boot.test.context.SpringBootTest;
+
 
 import static io.restassured.RestAssured.given;
 
+@SpringBootTest
 public class TestAPI {
 
     private static final RequestSpecification requestSpecificationBaseURI = new RequestSpecBuilder().setContentType(ContentType.JSON)
             .setBaseUri("http://localhost:8080/flights")
-            .build(); //
+            .build();
 
     public static void main(String[] args) {
-        /* POST Flight Test 1 */
+        /* POST Flight Test 1 - 200 - Success */
         RequestSpecification requestSpecification1 = given().spec(requestSpecificationBaseURI).body(
                 """
                         {
                         "id": 1,
                         "origin": "Seville",
                         "destination": "Paris",
-                        "departureDate": "2022-11-05",
+                        "departureDate": "2022-11-20",
                         "departureTime": "23:10:00",
                         "airline": "Fe22",
                         "price": 222.0,
@@ -36,14 +39,14 @@ public class TestAPI {
                 .then().spec(responseSpecification1).extract().response();
         System.out.println(response1.asString());
 
-        /* POST Flight Test 2 */
+        /* POST Flight Test 2 - 200 - Success */
         RequestSpecification requestSpecification2 = given().spec(requestSpecificationBaseURI).body(
                 """
                         {
                         "id": 2,
                         "origin": "Seville",
                         "destination": "Madrid",
-                        "departureDate": "2022-11-07",
+                        "departureDate": "2022-11-26",
                         "departureTime": "23:10:00",
                         "airline": "Fe22",
                         "price": 154.0,
@@ -56,14 +59,14 @@ public class TestAPI {
                 .then().spec(responseSpecification2).extract().response();
         System.out.println(response2.asString());
 
-        /* POST Flight Test 3 */
+        /* POST Flight Test 3 - 200 - Success */
         RequestSpecification requestSpecification3 = given().spec(requestSpecificationBaseURI).body(
                 """
                         {
                         "id": 3,
                         "origin": "Seville",
                         "destination": "Munich",
-                        "departureDate": "2022-11-05",
+                        "departureDate": "2022-11-23",
                         "departureTime": "23:10:00",
                         "airline": "Fe22",
                         "price": 421.0,
@@ -76,14 +79,14 @@ public class TestAPI {
                 .then().spec(responseSpecification3).extract().response();
         System.out.println(response3.asString());
 
-        /* POST Flight Test 4 */
+        /* POST Flight Test 4 - 200 - Success */
         RequestSpecification requestSpecification4 = given().spec(requestSpecificationBaseURI).body(
                 """
                         {
                         "id": 4,
                         "origin": "Madrid",
                         "destination": "Paris",
-                        "departureDate": "2022-11-04",
+                        "departureDate": "2022-11-18",
                         "departureTime": "23:10:00",
                         "airline": "Fe22",
                         "price": 125.0,
@@ -96,14 +99,14 @@ public class TestAPI {
                 .then().spec(responseSpecification4).extract().response();
         System.out.println(response4.asString());
 
-        /* POST Flight Test 5 */
+        /* POST Flight Test 5 - 200 - Success */
         RequestSpecification requestSpecification5 = given().spec(requestSpecificationBaseURI).body(
                 """
                         {
                         "id": 5,
                         "origin": "Bucharest",
                         "destination": "Seville",
-                        "departureDate": "2022-11-09",
+                        "departureDate": "2022-11-27",
                         "departureTime": "23:10:00",
                         "airline": "Fe22",
                         "price": 312.0,
@@ -116,7 +119,7 @@ public class TestAPI {
                 .then().spec(responseSpecification5).extract().response();
         System.out.println(response5.asString());
 
-        /* POST Flight Test 6 */
+        /* POST Flight Test 6 - 200 - Success */
         RequestSpecification requestSpecification6 = given().spec(requestSpecificationBaseURI).body(
                 """
                         {
@@ -136,14 +139,14 @@ public class TestAPI {
                 .then().spec(responseSpecification6).extract().response();
         System.out.println(response6.asString());
 
-        /* POST Flight Test 7 */
+        /* POST Flight Test 7 - 200 - Success */
         RequestSpecification requestSpecification7 = given().spec(requestSpecificationBaseURI).body(
                 """
                         {
                         "id": 7,
                         "origin": "Seville",
                         "destination": "Barcelona",
-                        "departureDate": "2022-11-04",
+                        "departureDate": "2022-11-24",
                         "departureTime": "23:10:00",
                         "airline": "Fe22",
                         "price": 322.0,
@@ -163,7 +166,7 @@ public class TestAPI {
                         "id": 8,
                         "origin": "Bucharest",
                         "destination": "Seville",
-                        "departureDate": "2022-11-07",
+                        "departureDate": "2022-11-25",
                         "departureTime": "23:10:00",
                         "airline": "Fe22",
                         "price": 312.0,
@@ -176,7 +179,23 @@ public class TestAPI {
                 .then().spec(responseSpecification8).extract().response();
         System.out.println(response8.asString());
 
-        /* GET Flight Test */
+        /* DELETE Flight Test 1 - Expected no value present -  500 to pass because not handled server exception - Success */
+        RequestSpecification requestSpecification9 = given().spec(requestSpecificationBaseURI);
+        // delete Flight ID = 1;
+        ResponseSpecification responseSpecification9 = new ResponseSpecBuilder().expectStatusCode(500).build();
+        Response response9 = requestSpecification9.when().delete("http://localhost:8080/flights/55").
+                then().spec(responseSpecification9).extract().response();
+        System.out.println(response9.asString());
+
+        /* DELETE Flight Test 2 - Expected to delete - Value was present 200 - Success */
+        RequestSpecification requestSpecification10= given().spec(requestSpecificationBaseURI);
+        // delete Flight ID = 7;
+        ResponseSpecification responseSpecification10 = new ResponseSpecBuilder().expectStatusCode(200).build();
+        Response response10 = requestSpecification10.when().delete("http://localhost:8080/flights/7").
+                then().spec(responseSpecification10).extract().response();
+        System.out.println(response10.asString());
+
+        /* GET Flight Test 1 - 200 - Success */
         RequestSpecification requestSpecification = given().spec(requestSpecificationBaseURI).when();
         ResponseSpecification responseSpecification = new ResponseSpecBuilder().expectStatusCode(200).expectContentType(ContentType.JSON).build();
         // get Flight with id = 1;
@@ -184,16 +203,13 @@ public class TestAPI {
                 then().spec(responseSpecification).extract().response();
         System.out.println(response.asString());
 
-
-//        /* DELETE Flight Test */
-//        RequestSpecification requestSpecification6 = given().spec(requestSpecificationBaseURI);
-//        // delete Flight ID = 1;
-//        ResponseSpecification responseSpecification6 = new ResponseSpecBuilder().expectStatusCode(200).build();
-//        Response response6 = requestSpecification6.when().delete("http://localhost:8080/flights/3").
-//                then().spec(responseSpecification6).extract().response();
-//        System.out.println(response6.asString());
-
-
+        /* GET Flight Test 2 - Expected no value present -  500 to pass because not handled server exception - Success */
+        RequestSpecification requestSpecification11 = given().spec(requestSpecificationBaseURI).when();
+        ResponseSpecification responseSpecification11 = new ResponseSpecBuilder().expectStatusCode(500).expectContentType(ContentType.JSON).build();
+        // get Flight with id = 1;
+        Response response11 = requestSpecification11.when().get("http://localhost:8080/flights/111").
+                then().spec(responseSpecification11).extract().response();
+        System.out.println(response11.asString());
 
     }
 }

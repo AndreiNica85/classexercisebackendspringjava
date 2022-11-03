@@ -2,13 +2,11 @@ package com.flyingticketsapp.classexercise.service;
 
 import com.flyingticketsapp.classexercise.model.Flight;
 import com.flyingticketsapp.classexercise.repository.FlightRepository;
-import com.flyingticketsapp.classexercise.resources.DateNotAvailableException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.*;
 import java.util.*;
-import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 @Service
@@ -67,24 +65,20 @@ public class FlightService {
         return flightRepository.getFlightsByDates(dateFrom, dateTo);
     }
 
-    public List<Flight> getFlightByDates3DaysAfterAndBefore(LocalDate chosenDate,String origin, String destination){     // If traveller chooses round trip
-        LocalDate less3Days = chosenDate.minusDays(4);
-        LocalDate more3Days = chosenDate.plusDays(4);
-        Predicate<Flight> filterByDestination3DaysBeforeAndAfter = flight -> (flight.getOrigin().equals(origin) && flight.getDestination().equals(destination)) && (flight.getDepartureDate().isAfter(less3Days) && flight.getDepartureDate().isBefore(more3Days) && flight.getDepartureDate().isAfter(LocalDate.now()));
-        return getFlights().stream().filter(filterByDestination3DaysBeforeAndAfter).toList();
-    }
-
     public void addFlight(Flight flight) {
         flightRepository.save(flight);
     }
 
-    public void deleteFlightById(Integer id) {
-        Optional<Flight> searchedFlight = flightRepository.findById(id);
+    public Flight deleteFlightById(Integer id) {
 
-        if(searchedFlight.isPresent()) {
-            flightRepository.delete(searchedFlight.get());
-        }
-        //should be better handled exception or response entity with confirmation
+        return getFlightById(id);
+
+//        Optional<Flight> searchedFlight = flightRepository.findById(id);
+//
+//        if(searchedFlight.isPresent()) {
+//            flightRepository.delete(searchedFlight.get());
+//        }
+//        //should be better handled exception or response entity with confirmation
     }
 
 //departureTime;
