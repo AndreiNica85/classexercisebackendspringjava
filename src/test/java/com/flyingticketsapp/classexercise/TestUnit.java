@@ -4,7 +4,6 @@ import com.flyingticketsapp.classexercise.model.Flight;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
-import io.restassured.specification.RequestSpecification;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -22,9 +21,6 @@ import static org.hamcrest.Matchers.*;
 
 @SpringBootTest
 public class TestUnit {
-
-    private static Flight fLight = new Flight();
-
 
     @Test  /* Pass */
     public void testIfAnyFlightsQueriedBeforeChosenDate() {
