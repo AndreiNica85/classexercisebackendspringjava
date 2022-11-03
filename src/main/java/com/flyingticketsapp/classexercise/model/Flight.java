@@ -9,6 +9,7 @@ import lombok.Setter;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -19,7 +20,6 @@ public class Flight {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @JoinColumn
     private Integer id;
     private String origin;
     private String destination;
@@ -28,8 +28,7 @@ public class Flight {
     private String airline;
     private boolean isRoundTrip;
     private double price;
-
-    @ManyToOne
-    private Traveller traveller;
+    @OneToMany
+    private List<Traveller> traveller;
 
 }

@@ -16,6 +16,7 @@ import java.util.List;
 public class Traveller {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @JoinColumn
     private Integer id;
     private String forename;
     private String surname;
