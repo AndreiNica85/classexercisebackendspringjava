@@ -29,7 +29,7 @@ public class TestAPI {
         RequestSpecification requestSpecification1 = given().spec(requestSpecificationBaseURI).body(
                 """
                         {
-                        "id": 1,
+               
                         "origin": "Seville",
                         "destination": "Paris",
                         "departureDate": "2022-11-20",
@@ -49,7 +49,7 @@ public class TestAPI {
         RequestSpecification requestSpecification2 = given().spec(requestSpecificationBaseURI).body(
                 """
                         {
-                        "id": 2,
+            
                         "origin": "Seville",
                         "destination": "Madrid",
                         "departureDate": "2022-11-26",
@@ -69,7 +69,7 @@ public class TestAPI {
         RequestSpecification requestSpecification3 = given().spec(requestSpecificationBaseURI).body(
                 """
                         {
-                        "id": 3,
+              
                         "origin": "Seville",
                         "destination": "Munich",
                         "departureDate": "2022-11-23",
@@ -89,7 +89,7 @@ public class TestAPI {
         RequestSpecification requestSpecification4 = given().spec(requestSpecificationBaseURI).body(
                 """
                         {
-                        "id": 4,
+              
                         "origin": "Madrid",
                         "destination": "Paris",
                         "departureDate": "2022-11-18",
@@ -109,7 +109,7 @@ public class TestAPI {
         RequestSpecification requestSpecification5 = given().spec(requestSpecificationBaseURI).body(
                 """
                         {
-                        "id": 5,
+               
                         "origin": "Bucharest",
                         "destination": "Seville",
                         "departureDate": "2022-11-27",
@@ -129,7 +129,7 @@ public class TestAPI {
         RequestSpecification requestSpecification6 = given().spec(requestSpecificationBaseURI).body(
                 """
                         {
-                        "id": 6,
+              
                         "origin": "Seville",
                         "destination": "Cadiz",
                         "departureDate": "2022-11-01",
@@ -149,7 +149,7 @@ public class TestAPI {
         RequestSpecification requestSpecification7 = given().spec(requestSpecificationBaseURI).body(
                 """
                         {
-                        "id": 7,
+                   
                         "origin": "Seville",
                         "destination": "Barcelona",
                         "departureDate": "2022-11-24",
@@ -169,7 +169,7 @@ public class TestAPI {
         RequestSpecification requestSpecification8 = given().spec(requestSpecificationBaseURI).body(
                 """
                         {
-                        "id": 8,
+                
                         "origin": "Bucharest",
                         "destination": "Seville",
                         "departureDate": "2022-11-25",
@@ -189,14 +189,16 @@ public class TestAPI {
         RequestSpecification requestSpecification13 = given().spec(requestSpecificationBaseURI).body(
                 """
                         {
-                        "id": 9,
                         "origin": "Paris",
                         "destination": "Madrid",
                         "departureDate": "2022-11-24",
                         "departureTime": "05:10:00",
                         "airline": "Fe22",
                         "price": 212.0,
-                        "roundTrip": true
+                        "roundTrip": true,
+                        "traveller": {
+                                        
+                                      }
                         }"""
         ).when();
         ResponseSpecification responseSpecification13 = new ResponseSpecBuilder().expectStatusCode(200).build();

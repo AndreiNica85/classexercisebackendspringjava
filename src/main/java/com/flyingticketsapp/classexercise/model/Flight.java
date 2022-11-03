@@ -20,6 +20,7 @@ public class Flight {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @JoinColumn
     private Integer id;
     private String origin;
     private String destination;
@@ -30,11 +31,9 @@ public class Flight {
     private double price;
 
     @OneToOne
-    @JsonIgnore
     private Plane plane;
 
     @ManyToOne
-    @JsonIgnore
     private Traveller traveller;
 
 }

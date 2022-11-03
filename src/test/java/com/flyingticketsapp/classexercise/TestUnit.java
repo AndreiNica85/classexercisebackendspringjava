@@ -44,6 +44,14 @@ public class TestUnit {
         System.out.println(response.asString());
     }
 
+    @Test
+    public void testOriginVsDestinationName() {
+        Response response = RestAssured.given().contentType(ContentType.JSON)
+                .when().get("http://localhost:8080/flights/1")
+                .then().assertThat().body("origin", not(equalTo("destination"))).extract().response();
+        System.out.println(response.asString());
+    }
+
 
 
 //    @Test  /*  */

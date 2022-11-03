@@ -1,6 +1,7 @@
 package com.flyingticketsapp.classexercise.service;
 
 import com.flyingticketsapp.classexercise.model.Flight;
+import com.flyingticketsapp.classexercise.model.Traveller;
 import com.flyingticketsapp.classexercise.repository.FlightRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
