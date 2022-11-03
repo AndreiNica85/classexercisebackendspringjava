@@ -66,21 +66,20 @@ public class FlightService {
         return flightRepository.getFlightsByDates(dateFrom, dateTo);
     }
 
+    public void setTravellerForFlight(int flightId, Traveller traveller){
+        flightRepository.getReferenceById(flightId).setTraveller(traveller);
+    }
+
     public void addFlight(Flight flight) {
         flightRepository.save(flight);
     }
 
+
+
     public Flight deleteFlightById(Integer id) {
-
         return getFlightById(id);
-
-//        Optional<Flight> searchedFlight = flightRepository.findById(id);
-//
-//        if(searchedFlight.isPresent()) {
-//            flightRepository.delete(searchedFlight.get());
-//        }
-//        //should be better handled exception or response entity with confirmation
     }
+
 
 //departureTime;
 //airline;

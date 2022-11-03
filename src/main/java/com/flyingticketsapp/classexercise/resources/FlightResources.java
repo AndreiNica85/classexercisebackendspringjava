@@ -85,4 +85,9 @@ public class FlightResources {
     public void deleteFlight(@PathVariable Integer id) {
         flightService.deleteFlightById(id);
     }
+
+    @PutMapping
+    public void setTravellerForFlight(){
+       
+    }
 }
