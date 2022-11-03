@@ -1,6 +1,5 @@
 package com.flyingticketsapp.classexercise.model;
 
-
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -23,7 +22,7 @@ public class Traveller {
     private int age;
     private String nationality;
     private String email;
-    private String pseudoPassword;
+    private String NIE;
     @OneToMany
     private List<Flight> bookedFlights;
 }

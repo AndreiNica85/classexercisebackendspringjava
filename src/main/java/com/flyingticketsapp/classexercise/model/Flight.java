@@ -1,12 +1,11 @@
 package com.flyingticketsapp.classexercise.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.format.annotation.DateTimeFormat;
+
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -20,6 +19,7 @@ public class Flight {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @JoinColumn
     private Integer id;
     private String origin;
     private String destination;
@@ -29,12 +29,7 @@ public class Flight {
     private boolean isRoundTrip;
     private double price;
 
-    @OneToOne
-    @JsonIgnore
-    private Plane plane;
-
     @ManyToOne
-    @JsonIgnore
     private Traveller traveller;
 
 }

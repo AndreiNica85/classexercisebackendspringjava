@@ -1,6 +1,5 @@
 package com.flyingticketsapp.classexercise;
 
-import io.restassured.RestAssured;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.builder.ResponseSpecBuilder;
 import io.restassured.http.ContentType;
@@ -9,13 +8,8 @@ import io.restassured.specification.RequestSpecification;
 import io.restassured.specification.ResponseSpecification;
 import org.springframework.boot.test.context.SpringBootTest;
 
-
-import java.time.LocalDate;
-import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
-
 import static io.restassured.RestAssured.given;
-import static org.hamcrest.Matchers.*;
+
 
 @SpringBootTest
 public class TestAPI {
@@ -26,10 +20,10 @@ public class TestAPI {
 
     public static void main(String[] args) {
         /* POST Flight Test 1 - 200 - Success */
+
         RequestSpecification requestSpecification1 = given().spec(requestSpecificationBaseURI).body(
                 """
                         {
-                        "id": 1,
                         "origin": "Seville",
                         "destination": "Paris",
                         "departureDate": "2022-11-20",
@@ -49,7 +43,7 @@ public class TestAPI {
         RequestSpecification requestSpecification2 = given().spec(requestSpecificationBaseURI).body(
                 """
                         {
-                        "id": 2,
+                                    
                         "origin": "Seville",
                         "destination": "Madrid",
                         "departureDate": "2022-11-26",
@@ -69,7 +63,7 @@ public class TestAPI {
         RequestSpecification requestSpecification3 = given().spec(requestSpecificationBaseURI).body(
                 """
                         {
-                        "id": 3,
+                                      
                         "origin": "Seville",
                         "destination": "Munich",
                         "departureDate": "2022-11-23",
@@ -89,7 +83,7 @@ public class TestAPI {
         RequestSpecification requestSpecification4 = given().spec(requestSpecificationBaseURI).body(
                 """
                         {
-                        "id": 4,
+                                      
                         "origin": "Madrid",
                         "destination": "Paris",
                         "departureDate": "2022-11-18",
@@ -109,7 +103,7 @@ public class TestAPI {
         RequestSpecification requestSpecification5 = given().spec(requestSpecificationBaseURI).body(
                 """
                         {
-                        "id": 5,
+                                       
                         "origin": "Bucharest",
                         "destination": "Seville",
                         "departureDate": "2022-11-27",
@@ -129,7 +123,7 @@ public class TestAPI {
         RequestSpecification requestSpecification6 = given().spec(requestSpecificationBaseURI).body(
                 """
                         {
-                        "id": 6,
+                                      
                         "origin": "Seville",
                         "destination": "Cadiz",
                         "departureDate": "2022-11-01",
@@ -149,7 +143,7 @@ public class TestAPI {
         RequestSpecification requestSpecification7 = given().spec(requestSpecificationBaseURI).body(
                 """
                         {
-                        "id": 7,
+                                           
                         "origin": "Seville",
                         "destination": "Barcelona",
                         "departureDate": "2022-11-24",
@@ -169,7 +163,7 @@ public class TestAPI {
         RequestSpecification requestSpecification8 = given().spec(requestSpecificationBaseURI).body(
                 """
                         {
-                        "id": 8,
+                                        
                         "origin": "Bucharest",
                         "destination": "Seville",
                         "departureDate": "2022-11-25",
@@ -189,14 +183,14 @@ public class TestAPI {
         RequestSpecification requestSpecification13 = given().spec(requestSpecificationBaseURI).body(
                 """
                         {
-                        "id": 9,
                         "origin": "Paris",
                         "destination": "Madrid",
                         "departureDate": "2022-11-24",
                         "departureTime": "05:10:00",
                         "airline": "Fe22",
                         "price": 212.0,
-                        "roundTrip": true
+                        "roundTrip": true,
+                        "traveller": null
                         }"""
         ).when();
         ResponseSpecification responseSpecification13 = new ResponseSpecBuilder().expectStatusCode(200).build();
@@ -214,7 +208,7 @@ public class TestAPI {
         System.out.println(response9.asString());
 
         /* DELETE Flight Test 2 - Expected to delete - Value was present 200 - Success */
-        RequestSpecification requestSpecification10= given().spec(requestSpecificationBaseURI);
+        RequestSpecification requestSpecification10 = given().spec(requestSpecificationBaseURI);
         // delete Flight ID = 7;
         ResponseSpecification responseSpecification10 = new ResponseSpecBuilder().expectStatusCode(200).build();
         Response response10 = requestSpecification10.when().delete("http://localhost:8080/flights/7").

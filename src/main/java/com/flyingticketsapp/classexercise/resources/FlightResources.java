@@ -15,7 +15,6 @@ public class FlightResources {
     @Autowired
     FlightService flightService;
 
-
     @GetMapping("/flights")
     public List<Flight> getFlights() {
         return flightService.getFlights();
