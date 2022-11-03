@@ -1,5 +1,6 @@
 package com.flyingticketsapp.classexercise;
 
+import io.restassured.RestAssured;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.builder.ResponseSpecBuilder;
 import io.restassured.http.ContentType;
@@ -9,7 +10,12 @@ import io.restassured.specification.ResponseSpecification;
 import org.springframework.boot.test.context.SpringBootTest;
 
 
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+
 import static io.restassured.RestAssured.given;
+import static org.hamcrest.Matchers.*;
 
 @SpringBootTest
 public class TestAPI {
@@ -178,6 +184,26 @@ public class TestAPI {
         Response response8 = requestSpecification8.when().post("http://localhost:8080/flights")
                 .then().spec(responseSpecification8).extract().response();
         System.out.println(response8.asString());
+
+        /* POST Flight Test 9 */
+        RequestSpecification requestSpecification13 = given().spec(requestSpecificationBaseURI).body(
+                """
+                        {
+                        "id": 9,
+                        "origin": "Paris",
+                        "destination": "Madrid",
+                        "departureDate": "2022-11-24",
+                        "departureTime": "05:10:00",
+                        "airline": "Fe22",
+                        "price": 212.0,
+                        "roundTrip": true
+                        }"""
+        ).when();
+        ResponseSpecification responseSpecification13 = new ResponseSpecBuilder().expectStatusCode(200).build();
+        // create Flight id = 9
+        Response response13 = requestSpecification13.when().post("http://localhost:8080/flights")
+                .then().spec(responseSpecification13).extract().response();
+        System.out.println(response13.asString());
 
         /* DELETE Flight Test 1 - Expected no value present -  500 to pass because not handled server exception - Success */
         RequestSpecification requestSpecification9 = given().spec(requestSpecificationBaseURI);

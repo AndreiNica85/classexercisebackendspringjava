@@ -1,8 +1,10 @@
 package com.flyingticketsapp.classexercise;
 
+import com.flyingticketsapp.classexercise.model.Flight;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
+import io.restassured.specification.RequestSpecification;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -10,6 +12,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.util.Assert;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,15 +23,48 @@ import static org.hamcrest.Matchers.*;
 @SpringBootTest
 public class TestUnit {
 
+    private static Flight fLight = new Flight();
+
+
     @Test  /* Pass */
     public void testIfAnyFlightsQueriedBeforeChosenDate() {
         Response response = RestAssured.given().contentType(ContentType.JSON)
-                .when().get("http://localhost:8080/flights/dates/2022-11-24")
+                .when().get("http://localhost:8080/flights/dates/2022-11-03")
                 .then().assertThat().body("departureDate", everyItem(not(lessThan(((LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")))))))).extract().response();
         System.out.println(response.asString());
     }
 
-    
+    @Test  /* Pass */              // Remember to put limit on departureTime field
+    public void checkDepartureTimeStillValidOneHourBeforeDeparture() {
+        LocalTime localTime = LocalTime.now().minusHours(1);
+        String oneHourBeforeDepartureTime = localTime.format(DateTimeFormatter.ofPattern("hh:mm:ss"));
+        Response response = RestAssured.given().contentType(ContentType.JSON)
+                .when().get("http://localhost:8080/flights/dates/2022-11-03")
+                .then().assertThat().body("departureTime", everyItem(greaterThan((oneHourBeforeDepartureTime)))).extract().response();
+        System.out.println(response.asString());
+    }
+
+
+
+//    @Test  /* Pass */
+//    public void tes1tIfAnyFlightsQueriedBeforeChosenDate() {
+//        Response response = RestAssured.given().contentType(ContentType.JSON)
+//                .when().get("http://localhost:8080/flights/dates/2022-11-24")
+//
+//
+//        System.out.println(response.asString());
+//
+//        RequestSpecification
+//    }
+
+
+//    @Test  /*  */
+//    public void testIfAnyFlightsQueriedBeforeChosenTime() {
+//        Response response = RestAssured.given().contentType(ContentType.JSON)
+//                .when().get("http://localhost:8080/flights")
+//                .then().assertThat().body("departureDate", everyItem(not(lessThan(((LocalTime.now().format(DateTimeFormatter.ofPattern("hh:mm")))))))).extract().response();
+//        System.out.println(response.asString());
+//    }
 
     public boolean bookASeat(String seat, List<String> seats) {
         return seats.remove(seat);
