@@ -10,14 +10,16 @@ import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Service
-public class BookService {
+public class BookFlightsService {
 
     @Autowired
     TravellerRepository travellerRepository;
 
-    protected static int countPaidFlights = 0;
+    protected static Long countPaidFlights = 0L;
+    protected static Long countAllPagesVisitsTraveller = 0L;
 
     public List<Traveller> getAllTravellers(){
+        countAllPagesVisitsTraveller++;
         return travellerRepository.findAll();
     }
 
@@ -27,11 +29,13 @@ public class BookService {
     }
 
     public Traveller addTraveller(Traveller traveller){
+        countAllPagesVisitsTraveller++;
         countPaidFlights++;
         return travellerRepository.save(traveller);
     }
 
     public Traveller getTravellerById(Integer id) {
+        countAllPagesVisitsTraveller++;
         Optional<Traveller> searchedFlight = travellerRepository.findById(id);
         if (searchedFlight.isPresent()) {
             return searchedFlight.get();

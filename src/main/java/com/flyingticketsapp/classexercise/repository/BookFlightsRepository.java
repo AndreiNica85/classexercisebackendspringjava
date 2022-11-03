@@ -9,7 +9,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Repository
-public interface FlightRepository extends JpaRepository<Flight, Integer> {
+public interface BookFlightsRepository extends JpaRepository<Flight, Integer> {
 
     List<Flight> findByOrigin(String origin);
 
