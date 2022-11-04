@@ -1,25 +1,37 @@
 package com.flyingticketsapp.classexercise;
 
+import io.restassured.RestAssured;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.builder.ResponseSpecBuilder;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 import io.restassured.specification.ResponseSpecification;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.util.Assert;
 
+
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 
 import static io.restassured.RestAssured.given;
-
+import static org.hamcrest.Matchers.*;
 
 
 @SpringBootTest
-public class TestAPI {
+public class ApplicationTest {
 
     private static final RequestSpecification requestSpecificationBaseURI = new RequestSpecBuilder().setContentType(ContentType.JSON)
             .setBaseUri("http://localhost:8080/flights")
@@ -29,7 +41,9 @@ public class TestAPI {
             .setBaseUri("http://localhost:8080/travellers")
             .build();
 
-    public static void main(String[] args) {
+    @Test//Fill database First
+    @BeforeAll
+    static void runAPITestsFirstToFillDatabase(){
 
         /* POST Flight Test 1 - 200 - Success */
         RequestSpecification requestSpecification1 = given().spec(requestSpecificationBaseURI).body(
@@ -250,7 +264,7 @@ public class TestAPI {
                 then().spec(responseSpecification11).extract().response();
         System.out.println(response11.asString());
 
-        /**  Travellers  */
+
 
         /* POST Traveller Test 1 - 200 - Success */
         RequestSpecification requestSpecification31 = given().spec(requestSpecificationBaseURITravellers).body(
@@ -357,8 +371,79 @@ public class TestAPI {
 
     }
 
+
+    @Test  /* Pass */
+    public void testIfAnyFlightsQueriedBeforeChosenDate() {
+        Response response = RestAssured.given().contentType(ContentType.JSON)
+                .when().get("http://localhost:8080/flights/dates/2022-11-03")
+                .then().assertThat().body("departureDate", everyItem(not(lessThan(((LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")))))))).extract().response();
+        System.out.println(response.asString());
+    }
+
+    @Test  /* Pass */              // Remember to put limit on departureTime field
+    public void checkDepartureTimeStillValidOneHourBeforeDeparture() {
+        LocalTime localTime = LocalTime.now().minusHours(1);
+        String oneHourBeforeDepartureTime = localTime.format(DateTimeFormatter.ofPattern("hh:mm:ss"));
+        Response response = RestAssured.given().contentType(ContentType.JSON)
+                .when().get("http://localhost:8080/flights/dates/2022-11-03")
+                .then().assertThat().body("departureTime", everyItem(greaterThan((oneHourBeforeDepartureTime)))).extract().response();
+        System.out.println(response.asString());
+
+    }
+
     @Test
-    void flightsAppTest() {
+    public void testOriginVsDestinationName() {
+        Response response = RestAssured.given().contentType(ContentType.JSON)
+                .when().get("http://localhost:8080/flights/1")
+                .then().assertThat().body("origin", not(equalTo("destination"))).extract().response();
+        System.out.println(response.asString());
+    }
+
+
+    public boolean bookASeat(String seat, List<String> seats) {
+        return seats.remove(seat);
+    }
+    @ParameterizedTest
+    @ValueSource(strings = {"15B","16B","17B","18B"})
+    public void testIfSeatIsAvailableForBooking(String seatAvailable) {
+
+        List<String> seats = new ArrayList<>();
+        seats.add("15B");
+        seats.add("16B");
+        seats.add("17B");
+        seats.add("18B");
+        Assert.isTrue(bookASeat(seatAvailable, seats), "Seat should be available for booking");
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"000","001","002","003","004","005","006","007","008"})
+    public void testIfSeatIsNotAvailableForBooking(String seatNotAvailable) {
+
+        List<String> seats = new ArrayList<>();
+        seats.add("15B");
+        seats.add("16B");
+        seats.add("17B");
+        seats.add("18B");
+        Assert.isTrue(!bookASeat(seatNotAvailable, seats), "Seat shouldnot be available for booking");
+    }
+
+    @Test
+    public void checkFlightDate() {
+        LocalDate flightDate = LocalDate.now().plusDays(5);
+        LocalDate currentDate = LocalDate.now();
+        Assert.isTrue(flightDate.compareTo(currentDate) >= 0, "flightDate should not be in past date");
+    }
+
+    @AfterAll
+    static void flightsAppTest() {
+
+        try {
+
+            Thread.sleep(7000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+
         System.setProperty("webdriver.chrome.driver", "C:/chromedriver.exe");
 
         WebDriver driver = new ChromeDriver();
@@ -398,8 +483,6 @@ public class TestAPI {
         }
 
 
-
-
         //Book Flight
         try {
             driver.findElement(By.xpath("//*[@id=\"root\"]/div/form/table/tr[4]/td/input")).click();
@@ -416,12 +499,11 @@ public class TestAPI {
         }
 
         try {
-            Thread.sleep(15000);
+            Thread.sleep(2000);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }finally {
             driver.close();
         }
-
     }
 }

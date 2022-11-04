@@ -9,11 +9,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.CascadeType;
-import org.hibernate.validator.constraints.time.DurationMin;
-import org.springframework.boot.convert.DurationFormat;
-import org.springframework.boot.convert.DurationStyle;
 
 
 import java.time.LocalDate;
@@ -39,8 +34,6 @@ public class Flight {
     @NotNull
     @NotBlank
     private String destination;
-
-
     private LocalDate departureDate;
     private LocalTime departureTime;
 
