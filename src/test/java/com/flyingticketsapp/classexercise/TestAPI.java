@@ -1,33 +1,21 @@
 package com.flyingticketsapp.classexercise;
 
-import com.flyingticketsapp.classexercise.model.Flight;
-import com.flyingticketsapp.classexercise.model.Traveller;
-import io.restassured.RestAssured;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.builder.ResponseSpecBuilder;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 import io.restassured.specification.ResponseSpecification;
-import jakarta.persistence.OneToMany;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.json.Json;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.testng.annotations.BeforeMethod;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.List;
 
 import static io.restassured.RestAssured.given;
-import static org.hamcrest.Matchers.*;
+
 
 
 @SpringBootTest
@@ -41,7 +29,6 @@ public class TestAPI {
             .setBaseUri("http://localhost:8080/travellers")
             .build();
 
-    @BeforeMethod
     public static void main(String[] args) {
 
         /* POST Flight Test 1 - 200 - Success */
@@ -281,7 +268,7 @@ public class TestAPI {
                         }"""
         ).when();
         ResponseSpecification responseSpecification31 = new ResponseSpecBuilder().expectStatusCode(200).build();
-        /**     */
+        // create traveller id = 1
         Response response31  = requestSpecification31.when().post("http://localhost:8080/travellers")
                 .then().spec(responseSpecification31).extract().response();
         System.out.println(response31.asString());
@@ -303,7 +290,7 @@ public class TestAPI {
                         }"""
         ).when();
         ResponseSpecification responseSpecification32 = new ResponseSpecBuilder().expectStatusCode(200).build();
-        // create Flight id = 1
+        // create traveller id = 2
         Response response32 = requestSpecification32.when().post("http://localhost:8080/travellers")
                 .then().spec(responseSpecification32).extract().response();
         System.out.println(response32.asString());
