@@ -106,6 +106,4 @@ public class FlightService {
     }
 
 
-//departureTime;
-//airline;
 }

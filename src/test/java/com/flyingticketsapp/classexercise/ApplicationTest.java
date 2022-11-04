@@ -276,7 +276,7 @@ public class ApplicationTest {
                         "userNameAdministrationPage": "admin",
                         "passwordAdministrationPage": "admin",
                         "nationality": "Romania",
-                        "email": "romanaia@gma.com",
+                        "email": "peter@gma.com",
                         "NIE": "F4562311J",
                         "bookedFlights": []
                         }"""
@@ -437,13 +437,6 @@ public class ApplicationTest {
     @AfterAll
     static void flightsAppTest() {
 
-        try {
-
-            Thread.sleep(7000);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
-
         System.setProperty("webdriver.chrome.driver", "C:/chromedriver.exe");
 
         WebDriver driver = new ChromeDriver();
@@ -455,6 +448,7 @@ public class ApplicationTest {
         // Select Origin
         WebElement elementOrigin = driver.findElement(By.id("origin"));
         try {
+            Thread.sleep(2000);
             elementOrigin.click();
             driver.findElement(By.xpath("//*[@id=\"origin\"]/option[3]")).click();
             Thread.sleep(2000);
@@ -493,6 +487,149 @@ public class ApplicationTest {
 
         try {
             driver.findElement(By.xpath("//*[@id=\"root\"]/div/div[2]/div[1]/div[2]/a")).click();
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+
+        try {
+            WebElement firstNameEl = driver.findElement(By.id("fname"));
+            firstNameEl.sendKeys("Andrei");
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+
+
+        try {
+            WebElement lastNameEl = driver.findElement(By.id("lname"));
+            lastNameEl.sendKeys("Rodrigo");
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+
+        try {
+            WebElement email = driver.findElement(By.id("email"));
+            email.sendKeys("peter@gma.com");
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+
+        try {
+            WebElement nie = driver.findElement(By.id("nie"));
+            nie.sendKeys("F4562311J");
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+
+        try {
+            WebElement nation = driver.findElement(By.id("nation"));
+            nation.sendKeys("Spanish");
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+
+        try {
+            WebElement age = driver.findElement(By.id("age"));
+            age.sendKeys("1");
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+
+        try {
+            WebElement book = driver.findElement(By.xpath("//*[@id=\"root\"]/div/div[2]/form/div[3]/button"));
+            book.click();
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+
+
+       // Payment
+
+
+        try {
+            WebElement name = driver.findElement(By.xpath("//*[@id=\"root\"]/div/div[2]/form/input[1]"));
+            name.sendKeys("AndreiPeterRodrigo");
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+
+        try {
+            WebElement cardNo = driver.findElement(By.xpath("//*[@id=\"root\"]/div/div[2]/form/input[2]"));
+            cardNo.sendKeys("123412345164361");
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+
+        try {
+            WebElement cardDate = driver.findElement(By.xpath("//*[@id=\"root\"]/div/div[2]/form/input[3]"));
+            cardDate.sendKeys("2022/04/11");
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+
+        try {
+            WebElement CVC = driver.findElement(By.xpath("//*[@id=\"root\"]/div/div[2]/form/input[4]"));
+            CVC.sendKeys("123");
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+
+
+        try {
+            WebElement pay = driver.findElement(By.xpath("//*[@id=\"root\"]/div/div[2]/form/a"));
+            pay.click();
+            Thread.sleep(10000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+
+        try {
+            WebElement login = driver.findElement(By.xpath("//*[@id=\"root\"]/div/div[1]/a[4]"));
+            login.click();
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+
+        try {
+            WebElement username = driver.findElement(By.xpath("//*[@id=\"root\"]/div/form/input[1]"));
+            username.sendKeys("admin");
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+
+        try {
+            WebElement password = driver.findElement(By.xpath("//*[@id=\"root\"]/div/form/input[2]"));
+            password.sendKeys("admin");
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+
+        try {
+            WebElement analytics = driver.findElement(By.xpath("//*[@id=\"root\"]/div/form/button"));
+            analytics.click();
+            Thread.sleep(5000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+
+
+        try {
+            WebElement analytics = driver.findElement(By.xpath("//*[@id=\"root\"]/div/div[2]/div[1]/a/img"));
+            analytics.click();
             Thread.sleep(3000);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
