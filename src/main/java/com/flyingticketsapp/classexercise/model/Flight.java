@@ -40,6 +40,7 @@ public class Flight {
     @NotBlank
     private String destination;
 
+
     private LocalDate departureDate;
     private LocalTime departureTime;
 

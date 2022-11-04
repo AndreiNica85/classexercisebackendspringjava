@@ -1,6 +1,5 @@
 package com.flyingticketsapp.classexercise;
 
-import com.flyingticketsapp.classexercise.model.Flight;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
@@ -9,6 +8,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.util.Assert;
+
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -38,6 +38,7 @@ public class TestUnit {
                 .when().get("http://localhost:8080/flights/dates/2022-11-03")
                 .then().assertThat().body("departureTime", everyItem(greaterThan((oneHourBeforeDepartureTime)))).extract().response();
         System.out.println(response.asString());
+
     }
 
     @Test

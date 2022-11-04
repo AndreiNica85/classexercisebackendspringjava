@@ -3,11 +3,14 @@ package com.flyingticketsapp.classexercise.resources;
 import com.flyingticketsapp.classexercise.model.Flight;
 import com.flyingticketsapp.classexercise.model.Traveller;
 import com.flyingticketsapp.classexercise.service.BookFlightsService;
+import com.flyingticketsapp.classexercise.service.FlightService;
 import jakarta.validation.Valid;
+import net.bytebuddy.implementation.bind.annotation.Default;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController

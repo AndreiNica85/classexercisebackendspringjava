@@ -109,8 +109,8 @@ public class FlightResources {
         flightService.deleteFlightById(id);
     }
 
-    @PutMapping("/flights/setTraveller")
-    public void setTravellerForFlight(int flightId, Traveller traveller){
-        flightService.setTravellerForFlight(flightId,traveller);
+    @PutMapping("/flights/{id}")
+    public void setTravellerForFlight(@PathVariable int id, Traveller traveller){
+        flightService.setTravellerForFlight(id,traveller);
     }
 }

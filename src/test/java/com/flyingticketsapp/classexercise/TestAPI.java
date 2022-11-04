@@ -1,6 +1,8 @@
 package com.flyingticketsapp.classexercise;
 
 import com.flyingticketsapp.classexercise.model.Flight;
+import com.flyingticketsapp.classexercise.model.Traveller;
+import io.restassured.RestAssured;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.builder.ResponseSpecBuilder;
 import io.restassured.http.ContentType;
@@ -11,11 +13,21 @@ import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+import org.junit.jupiter.api.Test;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.json.Json;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.testng.annotations.BeforeMethod;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import static io.restassured.RestAssured.given;
+import static org.hamcrest.Matchers.*;
 
 
 @SpringBootTest
@@ -29,6 +41,7 @@ public class TestAPI {
             .setBaseUri("http://localhost:8080/travellers")
             .build();
 
+    @BeforeMethod
     public static void main(String[] args) {
 
         /* POST Flight Test 1 - 200 - Success */
@@ -41,7 +54,8 @@ public class TestAPI {
                         "departureTime": "23:10:00",
                         "airline": "Fe22",
                         "price": 222.0,
-                        "roundTrip": false
+                        "roundTrip": false,
+                        "travellers": []
                         }"""
         ).when();
         ResponseSpecification responseSpecification1 = new ResponseSpecBuilder().expectStatusCode(200).build();
@@ -61,7 +75,8 @@ public class TestAPI {
                         "departureTime": "23:10:00",
                         "airline": "Fe22",
                         "price": 154.0,
-                        "roundTrip": true
+                        "roundTrip": true,
+                        "travellers": []
                         }"""
         ).when();
         ResponseSpecification responseSpecification2 = new ResponseSpecBuilder().expectStatusCode(200).build();
@@ -81,7 +96,8 @@ public class TestAPI {
                         "departureTime": "23:10:00",
                         "airline": "Fe22",
                         "price": 421.0,
-                        "roundTrip": false
+                        "roundTrip": false,
+                        "travellers": []
                         }"""
         ).when();
         ResponseSpecification responseSpecification3 = new ResponseSpecBuilder().expectStatusCode(200).build();
@@ -101,7 +117,8 @@ public class TestAPI {
                         "departureTime": "23:10:00",
                         "airline": "Fe22",
                         "price": 125.0,
-                        "roundTrip": false
+                        "roundTrip": false,
+                        "travellers": []
                         }"""
         ).when();
         ResponseSpecification responseSpecification4 = new ResponseSpecBuilder().expectStatusCode(200).build();
@@ -121,7 +138,8 @@ public class TestAPI {
                         "departureTime": "23:10:00",
                         "airline": "Fe22",
                         "price": 312.0,
-                        "roundTrip": true
+                        "roundTrip": true,
+                        "travellers": []
                         }"""
         ).when();
         ResponseSpecification responseSpecification5 = new ResponseSpecBuilder().expectStatusCode(200).build();
@@ -137,11 +155,12 @@ public class TestAPI {
                                       
                         "origin": "Seville",
                         "destination": "Cadiz",
-                        "departureDate": "2022-11-01",
+                        "departureDate": "2022-11-21",
                         "departureTime": "23:10:00",
                         "airline": "Fe22",
                         "price": 123.0,
-                        "roundTrip": false
+                        "roundTrip": false,
+                        "travellers": []
                         }"""
         ).when();
         ResponseSpecification responseSpecification6 = new ResponseSpecBuilder().expectStatusCode(200).build();
@@ -161,7 +180,8 @@ public class TestAPI {
                         "departureTime": "23:10:00",
                         "airline": "Fe22",
                         "price": 322.0,
-                        "roundTrip": false
+                        "roundTrip": false,
+                        "travellers": []
                         }"""
         ).when();
         ResponseSpecification responseSpecification7 = new ResponseSpecBuilder().expectStatusCode(200).build();
@@ -181,7 +201,8 @@ public class TestAPI {
                         "departureTime": "23:10:00",
                         "airline": "Fe22",
                         "price": 312.0,
-                        "roundTrip": true
+                        "roundTrip": true,
+                        "travellers": []
                         }"""
         ).when();
         ResponseSpecification responseSpecification8 = new ResponseSpecBuilder().expectStatusCode(200).build();
@@ -197,11 +218,11 @@ public class TestAPI {
                         "origin": "Paris",
                         "destination": "Madrid",
                         "departureDate": "2022-11-24",
-                        "departureTime": "05:10:00",
+                        "departureTime": "08:10:00",
                         "airline": "Fe22",
                         "price": 212.0,
                         "roundTrip": true,
-                        "traveller": null
+                        "travellers": []
                         }"""
         ).when();
         ResponseSpecification responseSpecification13 = new ResponseSpecBuilder().expectStatusCode(200).build();
@@ -260,10 +281,11 @@ public class TestAPI {
                         }"""
         ).when();
         ResponseSpecification responseSpecification31 = new ResponseSpecBuilder().expectStatusCode(200).build();
-        // create Traveller id = 1
-        Response response31 = requestSpecification31.when().post("http://localhost:8080/travellers")
+        /**     */
+        Response response31  = requestSpecification31.when().post("http://localhost:8080/travellers")
                 .then().spec(responseSpecification31).extract().response();
         System.out.println(response31.asString());
+
 
         /* POST Traveller Test 2 - 200 - Success */
         RequestSpecification requestSpecification32 = given().spec(requestSpecificationBaseURITravellers).body(
@@ -346,8 +368,73 @@ public class TestAPI {
                 then().spec(responseSpecification25).extract().response();
         System.out.println(response25.asString());
 
+    }
+
+    @Test
+    void flightsAppTest() {
+        System.setProperty("webdriver.chrome.driver", "C:/chromedriver.exe");
+
+        WebDriver driver = new ChromeDriver();
+        driver.get("http://localhost:3000");
+
+        // Click first Page Search Flight Button
+        driver.findElement(By.xpath("//*[@id=\"root\"]/div/div[2]/div[1]/button[1]/a")).click();
+
+        // Select Origin
+        WebElement elementOrigin = driver.findElement(By.id("origin"));
+        try {
+            elementOrigin.click();
+            driver.findElement(By.xpath("//*[@id=\"origin\"]/option[3]")).click();
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+
+        // Select Destination
+        WebElement elementDestination = driver.findElement(By.id("dest"));
+        elementDestination.click();
+        try {
+            driver.findElement(By.xpath("//*[@id=\"dest\"]/option[5]")).click();
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+
+        // Select Date
+        WebElement elementDate = driver.findElement(By.xpath("//*[@id=\"root\"]/div/form/table/tr[3]/td[2]/input"));
+        try {
+            elementDate.clear();
+            elementDate.sendKeys("20/11/2022");
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
 
 
+
+
+        //Book Flight
+        try {
+            driver.findElement(By.xpath("//*[@id=\"root\"]/div/form/table/tr[4]/td/input")).click();
+            Thread.sleep(3000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+
+        try {
+            driver.findElement(By.xpath("//*[@id=\"root\"]/div/div[2]/div[1]/div[2]/a")).click();
+            Thread.sleep(3000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+
+        try {
+            Thread.sleep(15000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }finally {
+            driver.close();
+        }
 
     }
 }
