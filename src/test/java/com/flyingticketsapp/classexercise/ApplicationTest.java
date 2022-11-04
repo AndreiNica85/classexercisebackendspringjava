@@ -448,7 +448,7 @@ public class ApplicationTest {
         // Select Origin
         WebElement elementOrigin = driver.findElement(By.id("origin"));
         try {
-            Thread.sleep(2000);
+            Thread.sleep(5000);
             elementOrigin.click();
             driver.findElement(By.xpath("//*[@id=\"origin\"]/option[3]")).click();
             Thread.sleep(2000);
