@@ -5,7 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface BookFlightsRepository extends JpaRepository<Traveller, Integer> {
+public interface TravellerRepository extends JpaRepository<Traveller, Integer> {
 
 
 }

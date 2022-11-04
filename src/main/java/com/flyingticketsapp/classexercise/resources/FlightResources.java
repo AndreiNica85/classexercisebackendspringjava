@@ -18,12 +18,7 @@ import java.util.stream.Collectors;
 public class FlightResources {
 
     @Autowired
-    @Qualifier("flightService")
     FlightService flightService;
-
-    public FlightResources (FlightService flightService){
-        this.flightService = flightService;
-    }
 
     @GetMapping("/flights")
     public List<Flight> getFlights() {

@@ -1,10 +1,10 @@
 package com.flyingticketsapp.classexercise.service;
 
 import com.flyingticketsapp.classexercise.model.Flight;
+import com.flyingticketsapp.classexercise.model.Analytics;
 import com.flyingticketsapp.classexercise.model.Traveller;
 import com.flyingticketsapp.classexercise.repository.FlightsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.time.*;
@@ -14,23 +14,21 @@ import java.util.stream.Collectors;
 @Service
 public class FlightService {
     @Autowired
-    @Qualifier("flightsRepository")
     FlightsRepository flightsRepository;
 
-    protected static Long countUnfinishedNotPaidFlights = 0L;
-    protected static Long countHomePageVisits = 0L;
-    protected static Long countAllPagesVisitsFlight = 0L;
-    protected static Long countOriginSelected = 0L;
-    protected static Long countDestinationsSelected = 0L;
+    @Autowired
+    Analytics analytics;
+
+
 
     public List<Flight> getFlights() {
-        countAllPagesVisitsFlight++;
-        countHomePageVisits++;
+        analytics.countAllPagesVisitsFlight++;
+        analytics.countHomePageVisits++;
         return flightsRepository.findAll();
     }
 
     public Flight getFlightById(Integer id) {
-        countAllPagesVisitsFlight++;
+        analytics.countAllPagesVisitsFlight++;
         Optional<Flight> searchedFlight = flightsRepository.findById(id);
         if (searchedFlight.isPresent()) {
             return searchedFlight.get();
@@ -40,48 +38,48 @@ public class FlightService {
     }
 
     public List<Flight> getFlightsByOrigin(String origin) {
-        countOriginSelected++;
-        countAllPagesVisitsFlight++;
+        analytics.countOriginSelected++;
+        analytics.countAllPagesVisitsFlight++;
         System.out.println("Triggered and origin:" + origin + "passed.");
         return flightsRepository.findByOrigin(origin);
     }
 
     public Set<String> getUniqueFlightOrigins() {                 // Get a collection of unique origins for the flights
-        countOriginSelected++;
+        analytics.countOriginSelected++;
         List<Flight> flightsBYOriginList = flightsRepository.findAll();
-        countUnfinishedNotPaidFlights++;
+        analytics.countUnfinishedNotPaidFlights++;
         return flightsBYOriginList.stream().map(Flight::getOrigin).collect(Collectors.toSet());
     }
 
     public Set<String> getDestinationStringsByUniqueOrigin(String origin) {      // Get a collection of unique destinations for the origin
-        countAllPagesVisitsFlight++;
-        countOriginSelected++;
+        analytics.countAllPagesVisitsFlight++;
+        analytics.countOriginSelected++;
         List<Flight> flightsBYOriginList = flightsRepository.findByOrigin(origin);
         return flightsBYOriginList.stream().map(Flight::getDestination).collect(Collectors.toSet());
     }
 
     public List<Flight> getFlightsByDestination(String destination) {
-         countAllPagesVisitsFlight++;
-         countDestinationsSelected++;
+        analytics.countAllPagesVisitsFlight++;
+        analytics.countDestinationsSelected++;
         return flightsRepository.findByDestination(destination);
     }
 
     public List<Flight> getFlightsByOriginAndDestination(String origin, String destination) {
-        countAllPagesVisitsFlight++;
-        countOriginSelected++;
-        countDestinationsSelected++;
+        analytics.countAllPagesVisitsFlight++;
+        analytics.countOriginSelected++;
+        analytics.countDestinationsSelected++;
         return flightsRepository.findByOriginAndDestination(origin, destination);
     }
 
     public List<Flight> getFlightsByDepartureDate(LocalDate departureDate) {
-        countAllPagesVisitsFlight++;
-        countOriginSelected++;
-        countDestinationsSelected++;
+        analytics.countAllPagesVisitsFlight++;
+        analytics.countOriginSelected++;
+        analytics.countDestinationsSelected++;
         return flightsRepository.findByDepartureDate(departureDate);
     }
 
     public List<Flight> getFlightsByDates(LocalDate dateFrom, LocalDate dateTo)  {
-        countAllPagesVisitsFlight++;
+        analytics.countAllPagesVisitsFlight++;
         if(dateFrom.isBefore(LocalDate.now())){
             dateFrom = LocalDate.now();
             dateTo = dateTo.plusDays(6);
@@ -90,22 +88,18 @@ public class FlightService {
     }
 
     public void setTravellerForFlight(int id, Traveller traveller){
-        countAllPagesVisitsFlight++;
+        analytics.countAllPagesVisitsFlight++;
         List<Traveller> listTravellers = flightsRepository.getReferenceById(id).getTravellers();
         listTravellers.add(traveller);
     }
 
     public void addFlight(Flight flight) {
-        countAllPagesVisitsFlight++;
+        analytics.countAllPagesVisitsFlight++;
         flightsRepository.save(flight);
     }
 
     public Flight deleteFlightById(Integer id) {
-        countAllPagesVisitsFlight++;
+        analytics.countAllPagesVisitsFlight++;
         return getFlightById(id);
     }
-
-
-//departureTime;
-//airline;
 }

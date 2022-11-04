@@ -41,7 +41,6 @@ public class TestAPI {
             .setBaseUri("http://localhost:8080/travellers")
             .build();
 
-    @BeforeMethod
     public static void main(String[] args) {
 
         /* POST Flight Test 1 - 200 - Success */
