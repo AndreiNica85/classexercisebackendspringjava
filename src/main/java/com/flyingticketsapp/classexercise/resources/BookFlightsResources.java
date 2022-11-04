@@ -1,5 +1,6 @@
 package com.flyingticketsapp.classexercise.resources;
 
+import com.flyingticketsapp.classexercise.model.Flight;
 import com.flyingticketsapp.classexercise.model.Traveller;
 import com.flyingticketsapp.classexercise.service.BookFlightsService;
 import jakarta.validation.Valid;
@@ -47,5 +48,7 @@ public class BookFlightsResources {
         Traveller userAdmin = bookFlightsService.getTravellerById(id);
         return userAdmin.getUserNameAdministrationPage().equals(userName) && userAdmin.getPasswordAdministrationPage().equals(password);
     }
+
+
 
 }

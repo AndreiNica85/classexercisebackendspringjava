@@ -1,7 +1,4 @@
 package com.flyingticketsapp.classexercise.service;
-
-
-import com.flyingticketsapp.classexercise.model.Flight;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -21,7 +18,7 @@ public class AnalyticsService {
     FlightService flightService;
 
     public Map<String,Long> getAllInformation(){
-        Map<String,Long> map = new HashMap<String,Long>();
+        Map<String,Long> map = new HashMap<>();
         map.put("countUnfinishedNotPaidFlights", FlightService.countUnfinishedNotPaidFlights);
         map.put("countHomePageVisits", FlightService.countHomePageVisits);
         map.put("countOriginSelected", FlightService.countOriginSelected);

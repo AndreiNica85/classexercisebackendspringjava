@@ -1,12 +1,19 @@
 package com.flyingticketsapp.classexercise;
 
+import com.flyingticketsapp.classexercise.model.Flight;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.builder.ResponseSpecBuilder;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 import io.restassured.specification.ResponseSpecification;
+import jakarta.persistence.OneToMany;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import org.springframework.boot.test.context.SpringBootTest;
+
+import java.util.List;
 
 import static io.restassured.RestAssured.given;
 
@@ -18,9 +25,13 @@ public class TestAPI {
             .setBaseUri("http://localhost:8080/flights")
             .build();
 
-    public static void main(String[] args) {
-        /* POST Flight Test 1 - 200 - Success */
+    private static final RequestSpecification requestSpecificationBaseURITravellers = new RequestSpecBuilder().setContentType(ContentType.JSON)
+            .setBaseUri("http://localhost:8080/travellers")
+            .build();
 
+    public static void main(String[] args) {
+
+        /* POST Flight Test 1 - 200 - Success */
         RequestSpecification requestSpecification1 = given().spec(requestSpecificationBaseURI).body(
                 """
                         {
@@ -34,7 +45,7 @@ public class TestAPI {
                         }"""
         ).when();
         ResponseSpecification responseSpecification1 = new ResponseSpecBuilder().expectStatusCode(200).build();
-        // create traveller id = 1
+        // create Flight id = 1
         Response response1 = requestSpecification1.when().post("http://localhost:8080/flights")
                 .then().spec(responseSpecification1).extract().response();
         System.out.println(response1.asString());
@@ -230,6 +241,113 @@ public class TestAPI {
         Response response11 = requestSpecification11.when().get("http://localhost:8080/flights/111").
                 then().spec(responseSpecification11).extract().response();
         System.out.println(response11.asString());
+
+        /**  Travellers  */
+
+        /* POST Traveller Test 1 - 200 - Success */
+        RequestSpecification requestSpecification31 = given().spec(requestSpecificationBaseURITravellers).body(
+                """
+                        {
+                        "forename": "Andrei",
+                        "surname": "Rodrigo",
+                        "age": "1",
+                        "userNameAdministrationPage": "admin",
+                        "passwordAdministrationPage": "admin",
+                        "nationality": "Romania",
+                        "email": "romanaia@gma.com",
+                        "NIE": "F4562311J",
+                        "bookedFlights": []
+                        }"""
+        ).when();
+        ResponseSpecification responseSpecification31 = new ResponseSpecBuilder().expectStatusCode(200).build();
+        // create Traveller id = 1
+        Response response31 = requestSpecification31.when().post("http://localhost:8080/travellers")
+                .then().spec(responseSpecification31).extract().response();
+        System.out.println(response31.asString());
+
+        /* POST Traveller Test 2 - 200 - Success */
+        RequestSpecification requestSpecification32 = given().spec(requestSpecificationBaseURITravellers).body(
+                """
+                         {
+                        "forename": "Peter",
+                        "surname": "Vasile",
+                        "age": "7",
+                        "userNameAdministrationPage": "admin",
+                        "passwordAdministrationPage": "admin",
+                        "nationality": "Spanish",
+                        "email": "der@gma.com",
+                        "NIE": "F4512311J",
+                        "bookedFlights": []
+                        }"""
+        ).when();
+        ResponseSpecification responseSpecification32 = new ResponseSpecBuilder().expectStatusCode(200).build();
+        // create Flight id = 1
+        Response response32 = requestSpecification32.when().post("http://localhost:8080/travellers")
+                .then().spec(responseSpecification32).extract().response();
+        System.out.println(response32.asString());
+
+        /* POST Traveller Test 3 - 200 - Success */
+        RequestSpecification requestSpecification33 = given().spec(requestSpecificationBaseURITravellers).body(
+                """
+                         {
+                        "forename": "Rodrigo",
+                        "surname": "Luan",
+                        "age": "12",
+                        "userNameAdministrationPage": "admin",
+                        "passwordAdministrationPage": "admin",
+                        "nationality": "Spanish",
+                        "email": "fero@gma.com",
+                        "NIE": "F4561211J",
+                        "bookedFlights": []
+                        }"""
+        ).when();
+        ResponseSpecification responseSpecification33 = new ResponseSpecBuilder().expectStatusCode(200).build();
+        // create Traveller id = 3
+        Response response33 = requestSpecification33.when().post("http://localhost:8080/travellers")
+                .then().spec(responseSpecification33).extract().response();
+        System.out.println(response33.asString());
+
+        /* POST Traveller Test 4 */
+        RequestSpecification requestSpecification23 = given().spec(requestSpecificationBaseURITravellers).body(
+                """
+                        {
+                        "forename": "Ioan",
+                        "surname": "Gheorghe",
+                        "age": "15",
+                        "userNameAdministrationPage": "admin",
+                        "passwordAdministrationPage": "admin",
+                        "nationality": "Romania",
+                        "email": "fero@gma.com",
+                        "NIE": "F4512211J",
+                        "bookedFlights": []
+                        }"""
+        ).when();
+        ResponseSpecification responseSpecification23 = new ResponseSpecBuilder().expectStatusCode(200).build();
+        // create traveller id = 4
+        Response response23 = requestSpecification23.when().post("http://localhost:8080/travellers")
+                .then().spec(responseSpecification23).extract().response();
+        System.out.println(response23.asString());
+
+
+        /* GET Traveller Test */
+        RequestSpecification requestSpecification24 = given().spec(requestSpecificationBaseURITravellers).when();
+        ResponseSpecification responseSpecification24 = new ResponseSpecBuilder().expectStatusCode(200).expectContentType(ContentType.JSON).build();
+        // get Traveller with id = 1;
+        Response response24 = requestSpecification24.when().get("http://localhost:8080/travellers/1").
+                then().spec(responseSpecification24).extract().response();
+        System.out.println(response24.asString());
+
+
+        /* DELETE Traveller Test */
+        RequestSpecification requestSpecification25 = given().spec(requestSpecificationBaseURITravellers);
+        // delete traveller ID = 1;
+        ResponseSpecification responseSpecification25 = new ResponseSpecBuilder().expectStatusCode(405).build();
+        Response response25 = requestSpecification25.when().delete("http://localhost:8080/travellers/3").
+                then().spec(responseSpecification25).extract().response();
+        System.out.println(response25.asString());
+
+
+
 
     }
 }
