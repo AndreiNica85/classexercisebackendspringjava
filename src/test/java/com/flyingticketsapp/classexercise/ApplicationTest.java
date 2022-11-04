@@ -445,10 +445,16 @@ public class ApplicationTest {
         // Click first Page Search Flight Button
         driver.findElement(By.xpath("//*[@id=\"root\"]/div/div[2]/div[1]/button[1]/a")).click();
 
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+
         // Select Origin
         WebElement elementOrigin = driver.findElement(By.id("origin"));
         try {
-            Thread.sleep(5000);
+            Thread.sleep(2000);
             elementOrigin.click();
             driver.findElement(By.xpath("//*[@id=\"origin\"]/option[3]")).click();
             Thread.sleep(2000);
